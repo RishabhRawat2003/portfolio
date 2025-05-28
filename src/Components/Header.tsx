@@ -44,7 +44,7 @@ export const Header = () => {
                 <div className="flex items-center justify-between">
                     <motion.a
                         whileHover={{ scale: 1.05 }}
-                        href="#home"
+                        href="/"
                         onClick={() => handleNavClick('home')}
                         className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent"
                     >
@@ -78,7 +78,7 @@ export const Header = () => {
                         <div className="hidden md:flex items-center space-x-4">
                             <motion.a
                                 whileHover={{ scale: 1.1 }}
-                                href="https://github.com"
+                                href="https://github.com/RishabhRawat2003"
                                 target="_blank"
                                 className="text-gray-300 hover:text-blue-400"
                             >
@@ -86,7 +86,7 @@ export const Header = () => {
                             </motion.a>
                             <motion.a
                                 whileHover={{ scale: 1.1 }}
-                                href="https://linkedin.com"
+                                href="https://www.linkedin.com/in/rishabh-rawat-371453228/"
                                 target="_blank"
                                 className="text-gray-300 hover:text-blue-400"
                             >
@@ -94,7 +94,6 @@ export const Header = () => {
                             </motion.a>
                             <motion.a
                                 whileHover={{ scale: 1.1 }}
-                                href="#contact"
                                 onClick={() => handleNavClick('contact')}
                                 className="text-gray-300 hover:text-blue-400"
                             >
@@ -103,8 +102,8 @@ export const Header = () => {
                         </div>
                         <motion.a
                             whileHover={{ scale: 1.05 }}
-                            href="/resume.pdf"
-                            download
+                            href="https://res.cloudinary.com/rishabh09/image/upload/f_auto,q_auto/Rishabh_Rawat_sapuia"
+                            target="_blank"
                             className="flex items-center px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 border border-blue-500/30"
                         >
                             <FiFileText className="mr-2" />

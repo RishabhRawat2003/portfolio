@@ -1,22 +1,38 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { FiMail, FiLinkedin, FiGithub, FiFileText, FiBriefcase, FiUser, FiSend } from "react-icons/fi";
 import { SiUpwork } from "react-icons/si";
 
+type SubjectOption = '' | 'hire' | 'freelance' | 'collab' | 'other';
+
+interface FormData {
+  name: string;
+  email: string;
+  subject: SubjectOption;
+  message: string;
+}
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  subject?: string;
+  message?: string;
+}
+
 const ContactSection = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     subject: '',
     message: ''
   });
-  
-  const [errors, setErrors] = useState({});
+
+  const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const validateForm = () => {
-    const newErrors = {};
+  const validateForm = (): FormErrors => {
+    const newErrors: FormErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
     if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) newErrors.email = 'Valid email required';
     if (!formData.subject) newErrors.subject = 'Subject is required';
@@ -24,7 +40,7 @@ const ContactSection = () => {
     return newErrors;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
@@ -44,11 +60,18 @@ const ContactSection = () => {
     }
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    // Clear error when user starts typing
-    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === 'subject' ? value as SubjectOption : value
+    }));
+
+    if (errors[name as keyof FormErrors]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
   return (
@@ -98,15 +121,7 @@ const ContactSection = () => {
               </h3>
               <div className="flex flex-wrap gap-4">
                 <a
-                  href="https://upwork.com"
-                  target="_blank"
-                  className="flex items-center px-6 py-3 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors"
-                >
-                  <SiUpwork className="mr-2" />
-                  Upwork Profile
-                </a>
-                <a
-                  href="https://github.com"
+                  href="https://github.com/RishabhRawat2003"
                   target="_blank"
                   className="flex items-center px-6 py-3 bg-gray-700/30 text-gray-300 rounded-lg hover:bg-blue-500/20 hover:text-blue-400 transition-colors"
                 >
@@ -120,7 +135,7 @@ const ContactSection = () => {
               <h3 className="text-2xl font-semibold text-gray-100 mb-6">Direct Connect</h3>
               <div className="flex justify-center gap-6">
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/rishabh-rawat-371453228/"
                   target="_blank"
                   className="p-3 bg-blue-500/10 text-blue-400 rounded-lg hover:bg-blue-500/20 transition-colors"
                   aria-label="LinkedIn Profile"
@@ -128,7 +143,7 @@ const ContactSection = () => {
                   <FiLinkedin className="text-2xl" />
                 </a>
                 <a
-                  href="mailto:hi@rishabhrawat.com"
+                  href="mailto:rajputrishabh359@gmail.com"
                   className="p-3 bg-purple-500/10 text-purple-400 rounded-lg hover:bg-purple-500/20 transition-colors"
                   aria-label="Send Email"
                 >
@@ -145,15 +160,16 @@ const ContactSection = () => {
             className="p-8 bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Form fields with proper TypeScript types */}
               <div>
                 <label className="block text-gray-300 mb-2">Your Name</label>
                 <input
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 bg-gray-700/30 rounded-lg text-gray-100 focus:outline-none ${
-                    errors.name ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-blue-500'
-                  }`}
+                  placeholder="Enter your name"
+                  className={`w-full px-4 py-3 bg-gray-700/30 rounded-lg text-gray-100 focus:outline-none ${errors.name ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-blue-500'
+                    }`}
                   aria-invalid={!!errors.name}
                   aria-describedby="name-error"
                 />
@@ -164,16 +180,17 @@ const ContactSection = () => {
                 )}
               </div>
 
+              {/* Email input */}
               <div>
                 <label className="block text-gray-300 mb-2">Email Address</label>
                 <input
                   type="email"
                   name="email"
+                  placeholder="Enter your email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 bg-gray-700/30 rounded-lg text-gray-100 focus:outline-none ${
-                    errors.email ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-blue-500'
-                  }`}
+                  className={`w-full px-4 py-3 bg-gray-700/30 rounded-lg text-gray-100 focus:outline-none ${errors.email ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-blue-500'
+                    }`}
                   aria-invalid={!!errors.email}
                   aria-describedby="email-error"
                 />
@@ -184,15 +201,15 @@ const ContactSection = () => {
                 )}
               </div>
 
+              {/* Subject select */}
               <div>
                 <label className="block text-gray-300 mb-2">Subject</label>
                 <select
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 bg-gray-700/30 rounded-lg text-gray-100 focus:outline-none ${
-                    errors.subject ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-blue-500'
-                  }`}
+                  className={`w-full px-4 py-3 bg-gray-700 rounded-lg text-gray-100 focus:outline-none ${errors.subject ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-blue-500'
+                    }`}
                   aria-invalid={!!errors.subject}
                   aria-describedby="subject-error"
                 >
@@ -209,16 +226,18 @@ const ContactSection = () => {
                 )}
               </div>
 
+              {/* Message textarea */}
               <div>
                 <label className="block text-gray-300 mb-2">Message</label>
                 <textarea
                   name="message"
                   value={formData.message}
+                  placeholder="Enter your message"
                   onChange={handleInputChange}
                   rows={5}
-                  className={`w-full px-4 py-3 bg-gray-700/30 rounded-lg text-gray-100 focus:outline-none ${
-                    errors.message ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-blue-500'
-                  }`}
+                  style={{ resize: 'none' }}
+                  className={`w-full px-4 py-3 bg-gray-700/30 rounded-lg text-gray-100 focus:outline-none ${errors.message ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-blue-500'
+                    }`}
                   aria-invalid={!!errors.message}
                   aria-describedby="message-error"
                 />
@@ -251,8 +270,8 @@ const ContactSection = () => {
         >
           <div className="text-gray-300 mb-4">Want to see my full qualifications?</div>
           <a
-            href="/resume.pdf"
-            download
+            href="https://res.cloudinary.com/rishabh09/image/upload/f_auto,q_auto/Rishabh_Rawat_sapuia"
+            target="_blank"
             className="inline-flex items-center px-8 py-4 bg-blue-500/20 text-blue-400 rounded-xl hover:bg-blue-500/30 transition-colors"
           >
             <FiFileText className="mr-2" />

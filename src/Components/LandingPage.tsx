@@ -36,8 +36,8 @@ export const LandingPage = () => {
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.05 }}
-                href="/resume.pdf"
-                download
+                href="https://res.cloudinary.com/rishabh09/image/upload/f_auto,q_auto/Rishabh_Rawat_sapuia"
+                target='_blank'
                 className="border border-blue-500 text-blue-500 px-8 py-3 rounded-lg hover:bg-blue-500/10"
               >
                 Download CV

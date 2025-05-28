@@ -97,13 +97,13 @@ const AboutPage = () => {
                             {
                                 title: "LLM-powered Backend System",
                                 role: "Backend",
-                                tech: ["Node.js", "Express", "MongoDB","OpenAI API"],
+                                tech: ["Node.js", "Express", "MongoDB", "OpenAI API"],
                                 icon: <FiZap />
                             },
                             {
                                 title: "NexMentor Platform",
                                 role: "Full Stack Lead",
-                                tech: ["Node.js", "Mongoose", "REST APIs","Redux"],
+                                tech: ["Node.js", "Mongoose", "REST APIs", "Redux", "Render"],
                                 icon: <FiTool />
                             },
                         ].map((item, index) => (
@@ -207,7 +207,7 @@ const AboutPage = () => {
     );
 };
 
-const SkillCategory = ({ title, icon, skills } : any) => (
+const SkillCategory = ({ title, icon, skills }: any) => (
     <motion.div
         whileHover={{ y: -5 }}
         className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700"
@@ -217,7 +217,7 @@ const SkillCategory = ({ title, icon, skills } : any) => (
             <h3 className="text-xl font-semibold">{title}</h3>
         </div>
         <div className="space-y-4">
-            {skills.map((skill, index)  => (
+            {skills.map((skill, index) => (
                 <div key={index} className="relative group">
                     <div className="flex justify-between mb-1">
                         <span className="text-gray-300">{skill.name}</span>
