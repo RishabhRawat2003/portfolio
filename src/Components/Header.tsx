@@ -40,18 +40,17 @@ export const Header = () => {
             animate={{ y: 0 }}
             className="fixed w-full z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-700"
         >
-            <nav className="container mx-auto px-6 py-4">
+            <nav className=" mx-auto px-3 sm:px-6 py-4">
                 <div className="flex items-center justify-between">
-                    <motion.a
+                    <motion.button
                         whileHover={{ scale: 1.05 }}
-                        href="/"
                         onClick={() => handleNavClick('home')}
-                        className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent"
+                        className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent"
                     >
                         Rishabh Portfolio
-                    </motion.a>
+                    </motion.button>
 
-                    <div className="hidden md:flex items-center space-x-8">
+                    <div className="hidden md:flex items-center md:space-x-2 lg:space-x-8">
                         {['home', 'about', 'projects', 'contact'].map((section) => (
                             <motion.button
                                 key={section}

@@ -6,7 +6,7 @@ export const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <main className="container mx-auto px-6 pt-32 pb-20">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -30,7 +30,7 @@ export const LandingPage = () => {
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 href="#contact"
-                className="bg-blue-500 text-white px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors"
+                className="bg-blue-500 text-white px-4 sm:px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors"
               >
                 Let's Connect
               </motion.a>
@@ -38,7 +38,7 @@ export const LandingPage = () => {
                 whileHover={{ scale: 1.05 }}
                 href="https://res.cloudinary.com/rishabh09/image/upload/f_auto,q_auto/Rishabh_Rawat_sapuia"
                 target='_blank'
-                className="border border-blue-500 text-blue-500 px-8 py-3 rounded-lg hover:bg-blue-500/10"
+                className="border border-blue-500 text-blue-500 px-4 sm:px-8 py-3 rounded-lg hover:bg-blue-500/10"
               >
                 Download CV
               </motion.a>

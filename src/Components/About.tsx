@@ -120,7 +120,7 @@ const AboutPage = () => {
                                     </div>
                                     <h3 className="text-xl font-semibold text-gray-100 mb-2">{item.title}</h3>
                                     <p className="text-blue-400 mb-3">{item.role}</p>
-                                    <div className={`flex ${index % 2 === 0 ? 'justify-end' : 'justify-start'} gap-2`}>
+                                    <div className={`flex flex-wrap ${index % 2 === 0 ? 'justify-end' : 'justify-start'} gap-2`}>
                                         {item.tech.map((tech, techIndex) => (
                                             <span key={techIndex} className="px-3 py-1 bg-gray-700/50 rounded-full text-sm">
                                                 {tech}
@@ -143,7 +143,7 @@ const AboutPage = () => {
                         Technical Arsenal
                     </h2>
 
-                    <div className="grid md:grid-cols-3 gap-8">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {/* Frontend Skills */}
                         <SkillCategory
                             title="Frontend Mastery"

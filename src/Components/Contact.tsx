@@ -1,8 +1,10 @@
 "use client";
+import axios from "axios";
 import { motion } from "framer-motion";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { FiMail, FiLinkedin, FiGithub, FiFileText, FiBriefcase, FiUser, FiSend } from "react-icons/fi";
-import { SiUpwork } from "react-icons/si";
+import { toast } from "react-toastify";
+const backend = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 type SubjectOption = '' | 'hire' | 'freelance' | 'collab' | 'other';
 
@@ -51,10 +53,15 @@ const ContactSection = () => {
     setIsSubmitting(true);
     try {
       // Add your submission logic here
-      console.log('Form data:', formData);
+      const response = await axios.post(`${backend}/contact`, formData);
+      if (response.status === 200) {
+        toast.success("Message sent successfully");
+      }
       // Reset form after submission
       setFormData({ name: '', email: '', subject: '', message: '' });
       setErrors({});
+    } catch (error) {
+      toast.error("Something went wrong");
     } finally {
       setIsSubmitting(false);
     }
@@ -106,7 +113,7 @@ const ContactSection = () => {
                 Looking for a dedicated full-stack developer to join your team?
               </p>
               <a
-                href="mailto:hi@rishabhrawat.com?subject=Career Opportunity"
+                href="mailto:rajputrishabh359@gmail.com"
                 className="inline-flex items-center px-6 py-3 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors"
               >
                 <FiFileText className="mr-2" />
