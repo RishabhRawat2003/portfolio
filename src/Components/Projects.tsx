@@ -18,7 +18,7 @@ const ProjectsSection = () => {
         tech: ["React.js", "Tailwind", "MongoDB", "Node.js"],
         link: "https://www.iskconwavecity.com",
         role: "Full Stack Developer",
-        duration: "5 Months",
+        status: "In Progress",
         date: "2025"
       },
       {
@@ -31,6 +31,24 @@ const ProjectsSection = () => {
         date: "2025"
       },
       {
+        title: "Skywall – E-commerce Platform for Televisions",
+        description: "Engineered a complete e-commerce platform tailored for television products. Integrated a secure payment gateway, built support for bulk orders, and designed the backend to handle product inventory and customer data efficiently.",
+        tech: ["React.js", "Node.js", "TailwindCSS", "Express", "MongoDB", "S3"],
+        link: "https://skywall-frontend.vercel.app",
+        role: "Full Stack Developer",
+        status: "In Progress",
+        date: "2025"
+      },
+      {
+        title: "Kisan Kumbh – AgriTech Event Platform",
+        description: "Built a full-stack platform for an agritech event featuring exhibitors and sponsors. Implemented slot booking with secure payment integration, and created admin tools to manage guests, stalls, and sponsorships.",
+        tech: ["React.js", "TailwindCSS", "Node.js", "MongoDB"],
+        link: "https://kisankumbh.in",
+        role: "Full Stack Developer",
+        status: "Completed",
+        date: "2025"
+      },
+      {
         title: "TaxRishi – Tax Solutions Platform",
         description: "Developed a feature-rich website offering a range of tax-related services and smart calculators built with complex business logic for accurate tax computation.",
         tech: ["React.js", "TailwindCSS"],
@@ -39,6 +57,42 @@ const ProjectsSection = () => {
         status: "Completed",
         date: "2024"
       },
+      {
+        title: "Mentor Sudhir – Personal Portfolio",
+        description: "Crafted a visually appealing and responsive personal portfolio for a mentor. Implemented engaging animations and smooth transitions to enhance presentation and interactivity across all sections.",
+        tech: ["React", "TailwindCSS"],
+        link: "https://mentorsudhir.com",
+        role: "Frontend Developer",
+        status: "Completed",
+        date: "2025"
+      },
+      {
+        title: "KDSure – Real Estate Listings Website",
+        description: "Developed a sleek and interactive frontend for a real estate platform. Showcased property listings with smooth animations and an optimized layout to improve user engagement and experience.",
+        tech: ["React", "TailwindCSS"],
+        link: "https://kdsure.com",
+        role: "Frontend Developer",
+        status: "Completed",
+        date: "2024"
+      },
+      {
+        title: "Elevate Edge – Startup & Bootcamp Platform",
+        description: "Designed and developed the frontend for a platform offering masterclasses, bootcamps, and startup mentoring. Focused on clear structure, responsive design, and seamless user flow across event listings and mentor profiles.",
+        tech: ["React", "TailwindCSS", "Node.js", "Express"],
+        link: "https://elevate-edge-frontend.vercel.app",
+        role: "Frontend Developer",
+        status: "In Progress",
+        date: "2025"
+      },
+      {
+        title: "Bharatronix – E-commerce Platform for Electronics",
+        description: "Backend development for an e-commerce platform focused on electronics. Designed scalable APIs, managed database schemas, and implemented core business logic for smooth product management and transactions.",
+        tech: ["React", "TailwindCSS", "Node.js", "Express.js", "MongoDB", "S3"],
+        link: "https://bharatroni-x-web-frontend.vercel.app",
+        role: "Backend Developer",
+        status: "In Progress",
+        date: "2025"
+      }
       // Add more collaborative projects
     ],
     freelancing: [
@@ -233,32 +287,6 @@ const ProjectsSection = () => {
                   <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-purple-400/30 rounded-tr-2xl"></div>
                   <div className="absolute bottom-0 left-0 w-16 h-16 border-b-2 border-l-2 border-blue-400/30 rounded-bl-2xl"></div>
                   <div className="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-purple-400/30 rounded-br-2xl"></div>
-
-                  {/* Floating particles */}
-                  {[...Array(15)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute rounded-full"
-                      style={{
-                        top: `${Math.random() * 100}%`,
-                        left: `${Math.random() * 100}%`,
-                        width: `${Math.random() * 6 + 2}px`,
-                        height: `${Math.random() * 6 + 2}px`,
-                        background: i % 3 === 0 ? '#3b82f6' : i % 3 === 1 ? '#8b5cf6' : '#60a5fa',
-                        opacity: 0.4
-                      }}
-                      animate={{
-                        y: [0, -20, 0],
-                        opacity: [0.3, 0.7, 0.3],
-                      }}
-                      transition={{
-                        duration: 3 + Math.random() * 5,
-                        repeat: Infinity,
-                        delay: Math.random() * 2,
-                        ease: "easeInOut"
-                      }}
-                    />
-                  ))}
                 </div>
               </motion.div>
             )}
@@ -269,7 +297,7 @@ const ProjectsSection = () => {
   );
 };
 
-const ProjectCard = ({ project, index }) => (
+const ProjectCard = ({ project, index } : any) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}

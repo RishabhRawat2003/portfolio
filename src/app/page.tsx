@@ -20,7 +20,6 @@ export default function Home() {
       {/* Projects Section */}
       <section id="projects">
         <ProjectsSection />
-
       </section>
 
       {/* Contact Section */}
