@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import { FiCode, FiServer, FiZap, FiTool, FiBookOpen, FiBox } from "react-icons/fi";
-import { SiNextdotjs, SiTypescript, SiMongodb, SiExpress } from "react-icons/si";
 
 const AboutPage = () => {
     return (
@@ -217,7 +216,7 @@ const SkillCategory = ({ title, icon, skills }: any) => (
             <h3 className="text-xl font-semibold">{title}</h3>
         </div>
         <div className="space-y-4">
-            {skills.map((skill, index) => (
+            {skills.map((skill : any, index : number) => (
                 <div key={index} className="relative group">
                     <div className="flex justify-between mb-1">
                         <span className="text-gray-300">{skill.name}</span>

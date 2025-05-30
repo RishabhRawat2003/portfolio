@@ -1,8 +1,7 @@
 "use client";
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiGithub, FiExternalLink, FiUsers, FiBriefcase, FiUser, FiFolder, FiClock } from 'react-icons/fi';
-import { SiTypescript, SiReact, SiNodedotjs, SiMongodb } from 'react-icons/si';
+import { FiGithub, FiExternalLink, FiUsers, FiBriefcase, FiUser, FiFolder } from 'react-icons/fi';
 
 const ProjectsSection = () => {
   const [activeTab, setActiveTab] = useState('personal');
@@ -164,7 +163,7 @@ const ProjectsSection = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode='wait'>
             {projects[activeTab].length > 0 ? (
-              projects[activeTab].map((project, index) => (
+              projects[activeTab].map((project : any, index : number) => (
                 <ProjectCard key={index} project={project} index={index} />
               ))
             ) : (
@@ -353,7 +352,7 @@ const ProjectCard = ({ project, index } : any) => (
 
       {/* Tech Stack */}
       <div className="flex flex-wrap gap-3 mb-6">
-        {project.tech.map((tech, index) => (
+        {project.tech.map((tech : string, index : number) => (
           <div
             key={index}
             className="px-3 py-1.5 bg-gray-700/30 rounded-full text-sm text-gray-300 hover:bg-blue-500/20 hover:text-blue-400 transition-colors"
