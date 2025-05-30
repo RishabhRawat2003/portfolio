@@ -18,10 +18,18 @@ interface Project {
   duration?: string;
 }
 
-const ProjectsSection = () => {
-  const [activeTab, setActiveTab] = useState('personal');
+interface Projects {
+  personal: Project[];
+  collaborative: Project[];
+  freelancing: Project[];
+}
 
-  const projects = {
+type Tab = keyof Projects;
+
+const ProjectsSection = () => {
+  const [activeTab, setActiveTab] = useState<Tab>('personal');
+
+  const projects: Projects  = {
     personal: [
       // Add more personal projects
     ],
@@ -161,7 +169,7 @@ const ProjectsSection = () => {
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => setActiveTab(tab.id as Tab)}
                 className={`flex items-center px-6 py-3 rounded-lg transition-all ${activeTab === tab.id
                   ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
                   : 'text-gray-300 hover:bg-gray-700/30'
