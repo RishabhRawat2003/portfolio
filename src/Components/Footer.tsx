@@ -20,6 +20,7 @@ const Footer = () => {
               href="https://github.com/RishabhRawat2003"
               target="_blank"
               rel="noopener noreferrer"
+              rel="noopener noreferrer"
               className="p-3 bg-gray-700/30 text-gray-300 rounded-lg hover:bg-blue-500/20 hover:text-blue-400 transition-colors"
               aria-label="GitHub Profile"
             >
@@ -28,6 +29,7 @@ const Footer = () => {
             <a
               href="https://www.linkedin.com/in/rishabh-rawat-371453228/"
               target="_blank"
+              rel="noopener noreferrer"
               rel="noopener noreferrer"
               className="p-3 bg-gray-700/30 text-gray-300 rounded-lg hover:bg-blue-500/20 hover:text-blue-400 transition-colors"
               aria-label="LinkedIn Profile"

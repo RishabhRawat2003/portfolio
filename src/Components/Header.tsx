@@ -79,6 +79,7 @@ export const Header = () => {
                                 whileHover={{ scale: 1.1 }}
                                 href="https://github.com/RishabhRawat2003"
                                 target="_blank"
+                                rel="noopener noreferrer"
                                 className="text-gray-300 hover:text-blue-400"
                             >
                                 <FiGithub className="text-xl" />
@@ -87,6 +88,7 @@ export const Header = () => {
                                 whileHover={{ scale: 1.1 }}
                                 href="https://www.linkedin.com/in/rishabh-rawat-371453228/"
                                 target="_blank"
+                                rel="noopener noreferrer"
                                 className="text-gray-300 hover:text-blue-400"
                             >
                                 <FiLinkedin className="text-xl" />
@@ -103,6 +105,7 @@ export const Header = () => {
                             whileHover={{ scale: 1.05 }}
                             href="https://res.cloudinary.com/rishabh09/image/upload/f_auto,q_auto/Rishabh_Rawat_sapuia"
                             target="_blank"
+                            rel="noopener noreferrer"
                             className="flex items-center px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 border border-blue-500/30"
                         >
                             <FiFileText className="mr-2" />

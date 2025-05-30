@@ -3,6 +3,21 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiGithub, FiExternalLink, FiUsers, FiBriefcase, FiUser, FiFolder } from 'react-icons/fi';
 
+interface Project {
+  title: string;
+  description: string;
+  tech: string[];
+  link: string;
+  date: string;
+  role: string;
+  status?: string;
+  github?: string;
+  client?: string;
+  company?: string;
+  team?: string;
+  duration?: string;
+}
+
 const ProjectsSection = () => {
   const [activeTab, setActiveTab] = useState('personal');
 
@@ -163,7 +178,7 @@ const ProjectsSection = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode='wait'>
             {projects[activeTab].length > 0 ? (
-              projects[activeTab].map((project : any, index : number) => (
+              projects[activeTab].map((project : Project, index : number) => (
                 <ProjectCard key={index} project={project} index={index} />
               ))
             ) : (
@@ -232,7 +247,7 @@ const ProjectsSection = () => {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.4 }}
                       >
-                        I'm currently crafting innovative solutions that showcase cutting-edge technologies and elegant design patterns. Stay tuned for exciting updates!
+                        I&apos;m currently crafting innovative solutions that showcase cutting-edge technologies and elegant design patterns. Stay tuned for exciting updates!
                       </motion.p>
                     </div>
 
@@ -296,7 +311,7 @@ const ProjectsSection = () => {
   );
 };
 
-const ProjectCard = ({ project, index } : any) => (
+const ProjectCard = ({ project, index } : { project: Project; index: number }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}

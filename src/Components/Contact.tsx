@@ -61,6 +61,7 @@ const ContactSection = () => {
       setFormData({ name: '', email: '', subject: '', message: '' });
       setErrors({});
     } catch (error) {
+      console.error("Contact form submission error:", error);
       toast.error("Something went wrong");
     } finally {
       setIsSubmitting(false);
@@ -93,7 +94,7 @@ const ContactSection = () => {
             Get In Touch
           </h2>
           <p className="text-xl text-gray-300">
-            Let's discuss how I can help bring your ideas to life
+            Let&apos;s discuss how I can help bring your ideas to life
           </p>
         </motion.div>
 
@@ -130,6 +131,7 @@ const ContactSection = () => {
                 <a
                   href="https://github.com/RishabhRawat2003"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center px-6 py-3 bg-gray-700/30 text-gray-300 rounded-lg hover:bg-blue-500/20 hover:text-blue-400 transition-colors"
                 >
                   <FiGithub className="mr-2" />
@@ -144,6 +146,7 @@ const ContactSection = () => {
                 <a
                   href="https://www.linkedin.com/in/rishabh-rawat-371453228/"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="p-3 bg-blue-500/10 text-blue-400 rounded-lg hover:bg-blue-500/20 transition-colors"
                   aria-label="LinkedIn Profile"
                 >
@@ -279,6 +282,7 @@ const ContactSection = () => {
           <a
             href="https://res.cloudinary.com/rishabh09/image/upload/f_auto,q_auto/Rishabh_Rawat_sapuia"
             target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center px-8 py-4 bg-blue-500/20 text-blue-400 rounded-xl hover:bg-blue-500/30 transition-colors"
           >
             <FiFileText className="mr-2" />

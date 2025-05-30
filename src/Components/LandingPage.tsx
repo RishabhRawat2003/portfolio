@@ -21,7 +21,7 @@ export const LandingPage = () => {
             </h1>
 
             <p className="text-lg md:text-xl text-gray-400 mb-8 leading-relaxed">
-              Hi, I'm Rishabh Rawat, a Full Stack Developer with 7+ months of industry experience 
+              Hi, I&apos;m Rishabh Rawat, a Full Stack Developer with 7+ months of industry experience 
               and 1.5+ years of coding expertise in the MERN stack. I excel in both frontend and 
               backend development, complemented by 1 year of successful freelancing experience.
             </p>
@@ -32,12 +32,13 @@ export const LandingPage = () => {
                 href="#contact"
                 className="bg-blue-500 text-white px-4 sm:px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors"
               >
-                Let's Connect
+                Let&apos;s Connect
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 href="https://res.cloudinary.com/rishabh09/image/upload/f_auto,q_auto/Rishabh_Rawat_sapuia"
                 target='_blank'
+                rel="noopener noreferrer"
                 className="border border-blue-500 text-blue-500 px-4 sm:px-8 py-3 rounded-lg hover:bg-blue-500/10"
               >
                 Download CV

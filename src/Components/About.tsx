@@ -2,6 +2,17 @@
 import { motion } from "framer-motion";
 import { FiCode, FiServer, FiZap, FiTool, FiBookOpen, FiBox } from "react-icons/fi";
 
+type Skill = {
+  name: string;
+  level: number;
+};
+
+type SkillCategoryProps = {
+  title: string;
+  icon: React.ReactNode;
+  skills: Skill[];
+};
+
 const AboutPage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
@@ -196,9 +207,9 @@ const AboutPage = () => {
                         Development Philosophy
                     </h3>
                     <p className="text-xl text-gray-300 leading-relaxed">
-                        "I believe in building solutions that stand the test of scale while maintaining
+                        &quot;I believe in building solutions that stand the test of scale while maintaining
                         elegance in simplicity. Every line of code should serve a purpose, and every
-                        architecture decision should balance performance with maintainability."
+                        architecture decision should balance performance with maintainability.&quot;
                     </p>
                 </div>
             </div>
@@ -206,7 +217,7 @@ const AboutPage = () => {
     );
 };
 
-const SkillCategory = ({ title, icon, skills }: any) => (
+const SkillCategory = ({ title, icon, skills }: SkillCategoryProps) => (
     <motion.div
         whileHover={{ y: -5 }}
         className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700"
@@ -216,7 +227,7 @@ const SkillCategory = ({ title, icon, skills }: any) => (
             <h3 className="text-xl font-semibold">{title}</h3>
         </div>
         <div className="space-y-4">
-            {skills.map((skill : any, index : number) => (
+            {skills.map((skill, index) => (
                 <div key={index} className="relative group">
                     <div className="flex justify-between mb-1">
                         <span className="text-gray-300">{skill.name}</span>
