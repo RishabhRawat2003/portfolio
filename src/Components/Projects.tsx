@@ -29,7 +29,7 @@ type Tab = keyof Projects;
 const ProjectsSection = () => {
   const [activeTab, setActiveTab] = useState<Tab>('personal');
 
-  const projects: Projects  = {
+  const projects: Projects = {
     personal: [
       // Add more personal projects
     ],
@@ -46,7 +46,7 @@ const ProjectsSection = () => {
       {
         title: "LLM-powered Backend System",
         description: "Architected a scalable backend integrating language models for intelligent automation. Implemented advanced email parsing to extract structured data, performed contextual analysis using LLMs, and generated intelligent reports based on extracted content.",
-        tech: ["TypeScript", "Node.js", "MongoDB"],
+        tech: ["Express.js", "Node.js", "MongoDB", "OpenAI", "S3"],
         link: "#",
         role: "Backend Developer",
         status: "In Progress",
@@ -186,7 +186,7 @@ const ProjectsSection = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode='wait'>
             {projects[activeTab].length > 0 ? (
-              projects[activeTab].map((project : Project, index : number) => (
+              projects[activeTab].map((project: Project, index: number) => (
                 <ProjectCard key={index} project={project} index={index} />
               ))
             ) : (
@@ -319,7 +319,7 @@ const ProjectsSection = () => {
   );
 };
 
-const ProjectCard = ({ project, index } : { project: Project; index: number }) => (
+const ProjectCard = ({ project, index }: { project: Project; index: number }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -375,7 +375,7 @@ const ProjectCard = ({ project, index } : { project: Project; index: number }) =
 
       {/* Tech Stack */}
       <div className="flex flex-wrap gap-3 mb-6">
-        {project.tech.map((tech : string, index : number) => (
+        {project.tech.map((tech: string, index: number) => (
           <div
             key={index}
             className="px-3 py-1.5 bg-gray-700/30 rounded-full text-sm text-gray-300 hover:bg-blue-500/20 hover:text-blue-400 transition-colors"
