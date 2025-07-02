@@ -40,11 +40,11 @@ const AboutPage = () => {
                                 </div>
                                 <div className="flex items-center text-purple-400">
                                     <FiCode className="mr-3" />
-                                    <span>1.5+ Years Coding Experience</span>
+                                    <span>1.7+ Years Coding Experience</span>
                                 </div>
                                 <div className="flex items-center text-green-400">
                                     <FiServer className="mr-3" />
-                                    <span>7+ Months Professional Experience</span>
+                                    <span>9+ Months Professional Experience</span>
                                 </div>
                             </div>
                         </div>
