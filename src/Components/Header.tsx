@@ -8,7 +8,7 @@ export const Header = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            const sections = ['home', 'about', 'projects', 'contact'];
+            const sections = ['home', 'about', 'projects', 'experience', 'contact'];
             const scrollPosition = window.scrollY + 100;
 
             for (const section of sections) {
@@ -50,14 +50,14 @@ export const Header = () => {
                         Rishabh Portfolio
                     </motion.button>
 
-                    <div className="hidden md:flex items-center md:space-x-2 lg:space-x-8">
-                        {['home', 'about', 'projects', 'contact'].map((section) => (
+                    <div className="hidden lg:flex items-center lg:space-x-8">
+                        {['home', 'about', 'projects', 'experience', 'contact'].map((section) => (
                             <motion.button
                                 key={section}
                                 onClick={() => handleNavClick(section)}
                                 className={`relative capitalize px-3 py-2 ${activeSection === section
-                                        ? 'text-blue-400'
-                                        : 'text-gray-300 hover:text-blue-300'
+                                    ? 'text-blue-400'
+                                    : 'text-gray-300 hover:text-blue-300'
                                     } transition-colors`}
                                 whileHover={{ scale: 1.05 }}
                             >

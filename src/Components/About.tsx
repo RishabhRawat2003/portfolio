@@ -36,7 +36,7 @@ const AboutPage = () => {
                             <div className="space-y-4">
                                 <div className="flex items-center text-blue-400">
                                     <FiZap className="mr-3" />
-                                    <span>Currently @ Startup + Freelancing</span>
+                                    <span>Currently Open to Work</span>
                                 </div>
                                 <div className="flex items-center text-purple-400">
                                     <FiCode className="mr-3" />

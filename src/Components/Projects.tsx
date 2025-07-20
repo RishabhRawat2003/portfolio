@@ -114,6 +114,15 @@ const ProjectsSection = () => {
         role: "Backend Developer",
         status: "In Progress",
         date: "2025"
+      },
+      {
+        title: "Suppkart – E-commerce Platform for Supplements",
+        description: "Full-stack development for a supplement-focused e-commerce platform. Built intuitive and responsive UI components using modern frontend frameworks, while also designing RESTful APIs and managing backend infrastructure for seamless product listings, cart operations, and order processing.",
+        tech: ["Nextjs", "TailwindCSS", "Node.js", "Express.js", "MongoDB", "S3"],
+        link: "https://suppkart-web-frontend.vercel.app/",
+        role: "Full Stack Developer",
+        status: "In Progress",
+        date: "2025"
       }
       // Add more collaborative projects
     ],

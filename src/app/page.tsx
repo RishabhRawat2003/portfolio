@@ -2,6 +2,7 @@ import AboutPage from "@/Components/About";
 import { LandingPage } from "@/Components/LandingPage";
 import ProjectsSection from "@/Components/Projects";
 import ContactSection from "../Components/Contact";
+import { ExperienceSection } from "@/Components/Experiences";
 
 
 export default function Home() {
@@ -20,6 +21,11 @@ export default function Home() {
       {/* Projects Section */}
       <section id="projects">
         <ProjectsSection />
+      </section>
+
+      {/* Experience Section */}
+      <section id="experience">
+        <ExperienceSection />
       </section>
 
       {/* Contact Section */}
