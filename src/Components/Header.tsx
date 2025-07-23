@@ -103,7 +103,7 @@ export const Header = () => {
                         </div>
                         <motion.a
                             whileHover={{ scale: 1.05 }}
-                            href="https://res.cloudinary.com/rishabh09/image/upload/f_auto,q_auto/Rishabh_Rawat_y6bppd"
+                            href="https://res.cloudinary.com/rishabh09/image/upload/f_auto,q_auto/Rishabh_Rawat_kskr0z"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 border border-blue-500/30"

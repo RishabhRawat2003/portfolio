@@ -51,9 +51,23 @@ export const ExperienceSection = () => {
                 {
                     title: "Software Developer Intern",
                     startDate: "November 2024",
-                    endDate: "December 2024",
+                    endDate: "January 2025",
                     description: "Led development of company's flagship product. Improved performance by 40% and mentored junior developers. Implemented CI/CD pipeline.",
                     skills: ["React", "Next.js", "MongoDB", "Express"]
+                }
+            ],
+            current: false
+        },
+        {
+            company: "Crazy WebDev Technologies.",
+            image: "https://res.cloudinary.com/rishabh09/image/upload/v1752990797/logo-white_yosjt4.webp",
+            positions: [
+                {
+                    title: "Software Developer Intern",
+                    startDate: "January 2024",
+                    endDate: "June 2024",
+                    description: "Contributed to UI/UX improvements using React and TailwindCSS, enhancing user experience by 20%. Built and integrated full-stack features with Express and MongoDB. Gained practical experience in performance optimization and agile collaboration.",
+                    skills: ["React", "TailwindCSS", "Node.js", "Express", "MongoDB", "JavaScript"]
                 }
             ],
             current: false
@@ -139,11 +153,11 @@ export const ExperienceSection = () => {
                                 <div className="space-y-3">
                                     <div className="flex justify-between">
                                         <span className="text-gray-400">Industry Experience</span>
-                                        <span className="text-white font-medium">9+ Months</span>
+                                        <span className="text-white font-medium">1+ Years</span>
                                     </div>
                                     <div className="flex justify-between">
                                         <span className="text-gray-400">Coding Experience</span>
-                                        <span className="text-white font-medium">1.7+ Years</span>
+                                        <span className="text-white font-medium">2+ Years</span>
                                     </div>
                                     <div className="flex justify-between">
                                         <span className="text-gray-400">Freelance Projects</span>

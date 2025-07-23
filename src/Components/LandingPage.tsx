@@ -21,8 +21,8 @@ export const LandingPage = () => {
             </h1>
 
             <p className="text-lg md:text-xl text-gray-400 mb-8 leading-relaxed">
-              Hi, I&apos;m Rishabh Rawat, a Full Stack Developer with 9+ months of industry experience 
-              and 1.7+ years of coding expertise in the MERN stack. I excel in both frontend and 
+              Hi, I&apos;m Rishabh Rawat, a Full Stack Developer with 1+ years of industry experience 
+              and 2+ years of coding expertise in the MERN stack. I excel in both frontend and 
               backend development, complemented by 1 year of successful freelancing experience.
             </p>
 
@@ -36,7 +36,7 @@ export const LandingPage = () => {
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.05 }}
-                href="https://res.cloudinary.com/rishabh09/image/upload/f_auto,q_auto/Rishabh_Rawat_y6bppd"
+                href="https://res.cloudinary.com/rishabh09/image/upload/f_auto,q_auto/Rishabh_Rawat_kskr0z"
                 target='_blank'
                 rel="noopener noreferrer"
                 className="border border-blue-500 text-blue-500 px-4 sm:px-8 py-3 rounded-lg hover:bg-blue-500/10"
@@ -82,8 +82,8 @@ export const LandingPage = () => {
           className="grid md:grid-cols-3 gap-8 mt-24"
         >
           {[
-            { title: "Industry Experience", value: "9+ Months" },
-            { title: "Coding Experience", value: "1.7+ Years" },
+            { title: "Industry Experience", value: "1+ Years" },
+            { title: "Coding Experience", value: "2+ Years" },
             { title: "Freelance Projects", value: "2+ Completed" },
           ].map((item, index) => (
             <div key={index} className="bg-gray-800/50 p-6 rounded-xl hover:bg-gray-800/70 transition-colors">
