@@ -53,7 +53,7 @@ export const ExperienceSection = () => {
         },
         {
             company: "Crazy WebDev Technologies.",
-            image: "https://res.cloudinary.com/rishabh09/image/upload/v1752990797/logo-white_yosjt4.webp",
+            image: "https://res.cloudinary.com/rishabh09/image/upload/v1753370055/crazywebdev_srrhkt.png",
             positions: [
                 {
                     title: "Software Developer Intern",
