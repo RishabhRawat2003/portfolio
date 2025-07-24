@@ -43,18 +43,11 @@ export const ExperienceSection = () => {
             positions: [
                 {
                     title: "Software Developer Trainee",
-                    startDate: "December 2024",
+                    startDate: "November 2024",
                     endDate: "January 2025",
                     description: "Developed responsive web applications using React and Node.js. Collaborated with senior developers to implement new features and fix bugs.",
                     skills: ["React", "Node.js", "MongoDB", "Express", "TailwindCSS"]
                 },
-                {
-                    title: "Software Developer Intern",
-                    startDate: "November 2024",
-                    endDate: "January 2025",
-                    description: "Led development of company's flagship product. Improved performance by 40% and mentored junior developers. Implemented CI/CD pipeline.",
-                    skills: ["React", "Next.js", "MongoDB", "Express"]
-                }
             ],
             current: false
         },
