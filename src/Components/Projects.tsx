@@ -40,7 +40,6 @@ const ProjectsSection = () => {
         tech: ["React.js", "Tailwind", "MongoDB", "Node.js"],
         link: "https://www.iskconwavecity.com",
         role: "Full Stack Developer",
-        status: "In Progress",
         date: "2025"
       },
       {
@@ -49,7 +48,6 @@ const ProjectsSection = () => {
         tech: ["Express.js", "Node.js", "MongoDB", "OpenAI", "S3"],
         link: "#",
         role: "Backend Developer",
-        status: "In Progress",
         date: "2025"
       },
       {
@@ -58,7 +56,6 @@ const ProjectsSection = () => {
         tech: ["React.js", "Node.js", "TailwindCSS", "Express", "MongoDB", "S3"],
         link: "https://skywall-frontend.vercel.app",
         role: "Full Stack Developer",
-        status: "In Progress",
         date: "2025"
       },
       {
@@ -67,7 +64,6 @@ const ProjectsSection = () => {
         tech: ["React.js", "TailwindCSS", "Node.js", "MongoDB"],
         link: "https://kisankumbh.in",
         role: "Full Stack Developer",
-        status: "Completed",
         date: "2025"
       },
       {
@@ -76,7 +72,6 @@ const ProjectsSection = () => {
         tech: ["React.js", "TailwindCSS"],
         link: "https://taxrishi.in",
         role: "Frontend Developer",
-        status: "Completed",
         date: "2024"
       },
       {
@@ -85,7 +80,6 @@ const ProjectsSection = () => {
         tech: ["React", "TailwindCSS"],
         link: "https://mentorsudhir.com",
         role: "Frontend Developer",
-        status: "Completed",
         date: "2025"
       },
       {
@@ -94,7 +88,6 @@ const ProjectsSection = () => {
         tech: ["React", "TailwindCSS"],
         link: "https://kdsure.com",
         role: "Frontend Developer",
-        status: "Completed",
         date: "2024"
       },
       {
@@ -103,27 +96,24 @@ const ProjectsSection = () => {
         tech: ["React", "TailwindCSS", "Node.js", "Express"],
         link: "https://elevate-edge-frontend.vercel.app",
         role: "Frontend Developer",
-        status: "In Progress",
         date: "2025"
       },
       {
         title: "Bharatronix – E-commerce Platform for Electronics",
         description: "Backend development for an e-commerce platform focused on electronics. Designed scalable APIs, managed database schemas, and implemented core business logic for smooth product management and transactions.",
         tech: ["React", "TailwindCSS", "Node.js", "Express.js", "MongoDB", "S3"],
-        link: "https://bharatroni-x-web-frontend.vercel.app",
-        role: "Backend Developer",
-        status: "In Progress",
+        link: "https://bharatronix.com/",
+        role: "Full Stack Developer",
         date: "2025"
       },
-      {
-        title: "Suppkart – E-commerce Platform for Supplements",
-        description: "Full-stack development for a supplement-focused e-commerce platform. Built intuitive and responsive UI components using modern frontend frameworks, while also designing RESTful APIs and managing backend infrastructure for seamless product listings, cart operations, and order processing.",
-        tech: ["Nextjs", "TailwindCSS", "Node.js", "Express.js", "MongoDB", "S3"],
-        link: "https://suppkart-web-frontend.vercel.app/",
-        role: "Full Stack Developer",
-        status: "In Progress",
-        date: "2025"
-      }
+      // {
+      //   title: "Suppkart – E-commerce Platform for Supplements",
+      //   description: "Full-stack development for a supplement-focused e-commerce platform. Built intuitive and responsive UI components using modern frontend frameworks, while also designing RESTful APIs and managing backend infrastructure for seamless product listings, cart operations, and order processing.",
+      //   tech: ["Nextjs", "TailwindCSS", "Node.js", "Express.js", "MongoDB", "S3"],
+      //   link: "https://suppkart-web-frontend.vercel.app/",
+      //   role: "Full Stack Developer",
+      //   date: "2025"
+      // }
       // Add more collaborative projects
     ],
     freelancing: [
