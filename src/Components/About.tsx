@@ -7,6 +7,8 @@ type Skill = {
   level: number;
 };
 
+
+
 type SkillCategoryProps = {
   title: string;
   icon: React.ReactNode;
