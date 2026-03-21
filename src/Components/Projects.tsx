@@ -144,7 +144,7 @@ const PROJECTS: Projects = {
       description:
         "Built a scalable mental wellness platform serving individuals and organizations, enabling companies to offer employee wellness programs and users to access personalized therapy plans. Implemented secure payment integration, goal-based progress tracking between therapists and users, and an automated therapist matching system based on real-time availability. Developed a robust admin dashboard to manage users, therapists, and platform operations efficiently.",
       tech: ["NextJS", "NodeJs", "MongoDB", "ExpressJS", "Tailwind", "Razorpay", "OAuth"],
-      role: "Frontend Developer",
+      role: "FullStack Developer",
       team: "4 member",
       date: "2025",
     },
