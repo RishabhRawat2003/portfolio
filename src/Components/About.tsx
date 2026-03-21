@@ -1,250 +1,466 @@
 "use client";
-import { motion } from "framer-motion";
-import { FiCode, FiServer, FiZap, FiTool, FiBookOpen, FiBox } from "react-icons/fi";
 
-type Skill = {
+import { motion } from "framer-motion";
+import {
+  FiCode, FiServer, FiZap, FiTool,
+  FiBookOpen, FiBox, FiCloud, FiCpu,
+} from "react-icons/fi";
+import {
+  SiNestjs, SiPostgresql, SiMysql,
+  SiDocker, SiRedis, SiRabbitmq,
+} from "react-icons/si";
+import { FaAws } from "react-icons/fa";
+import type { IconType } from "react-icons";
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+interface Skill {
   name: string;
   level: number;
-};
+  Icon?: IconType;
+  iconColor?: string;
+}
 
-
-
-type SkillCategoryProps = {
+interface SkillCategoryProps {
   title: string;
-  icon: React.ReactNode;
+  Icon: IconType;
+  accent: string;
   skills: Skill[];
-};
+}
 
-const AboutPage = () => {
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
-                {/* Profile Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="grid lg:grid-cols-3 gap-12 mb-24"
-                >
-                    {/* Profile Card */}
-                    <div className="relative group col-span-1">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl blur opacity-30 group-hover:opacity-50 transition-all" />
-                        <div className="relative bg-gray-800/50 backdrop-blur-sm rounded-3xl p-8 border border-gray-700">
-                            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
-                                Rishabh Rawat
-                            </h1>
-                            <p className="text-xl text-gray-300 mb-6">
-                                Full Stack Developer (MERN Specialist)
-                            </p>
-                            <div className="space-y-4">
-                                <div className="flex items-center text-blue-400">
-                                    <FiZap className="mr-3" />
-                                    <span>Currently Open to Work</span>
-                                </div>
-                                <div className="flex items-center text-purple-400">
-                                    <FiCode className="mr-3" />
-                                    <span>2+ Years Coding Experience</span>
-                                </div>
-                                <div className="flex items-center text-green-400">
-                                    <FiServer className="mr-3" />
-                                    <span>1+ Years Professional Experience</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+interface TimelineItem {
+  title: string;
+  role: string;
+  tech: string[];
+  Icon: IconType;
+}
 
-                    {/* Intro Text */}
-                    <div className="lg:col-span-2 space-y-6">
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.2 }}
-                            className="text-xl text-gray-300 leading-relaxed border-l-4 border-blue-500 pl-6"
-                        >
-                            I bridge ideas and reality through full-stack excellence, specializing in
-                            performance optimization and robust architecture design. Currently crafting
-                            a large-scale backend system integrating LLMs for smart functionality.
-                        </motion.p>
+// ─── Static Data ──────────────────────────────────────────────────────────────
 
-                        {/* Current Focus */}
-                        <div className="p-6 bg-gray-800/50 rounded-xl border border-blue-500/20">
-                            <div className="flex items-center mb-4">
-                                <div className="animate-pulse bg-blue-500 w-3 h-3 rounded-full mr-3" />
-                                <h3 className="text-lg font-semibold text-blue-400">Current Focus</h3>
-                            </div>
-                            <p className="text-gray-300">
-                                Diving deep into DevOps practices and advanced backend engineering patterns.
-                            </p>
-                        </div>
-                    </div>
-                </motion.div>
+const TIMELINE: TimelineItem[] = [
+  {
+    title: "LLM-powered Backend System",
+    role: "Backend Developer",
+    tech: ["NodeJS", "MongoDB", "RabbitMQ", "Redis", "AWS S3"],
+    Icon: FiZap,
+  },
+  {
+    title: "ISKCON Wavecity Official Website",
+    role: "Full Stack Developer",
+    tech: ["React", "NodeJS", "MongoDB", "AWS S3", "EC2"],
+    Icon: FiBookOpen,
+  },
+  {
+    title: "NexMentor Platform",
+    role: "Full Stack Lead",
+    tech: ["NodeJS", "MongoDB", "ExpressJS", "ReactJS", "Render"],
+    Icon: FiTool,
+  },
+  {
+    title: "Skywall E-commerce Platform",
+    role: "Full Stack Developer",
+    tech: ["React", "NestJS", "PostgreSQL", "Redis", "Docker"],
+    Icon: FiBox,
+  },
+];
 
-                {/* Experience Timeline */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    className="mb-24"
-                >
-                    <h2 className="text-3xl font-bold text-gray-100 mb-12 text-center">
-                        Notable Contributions
-                    </h2>
+const SKILL_CATEGORIES: SkillCategoryProps[] = [
+  {
+    title: "Frontend",
+    Icon: FiCode,
+    accent: "#00e5ff",
+    skills: [
+      { name: "React.js",      level: 90 },
+      { name: "Next.js",       level: 85 },
+      { name: "TypeScript",    level: 85 },
+      { name: "Tailwind CSS",  level: 95 },
+      { name: "Redux Toolkit", level: 80 },
+      { name: "HTML5 / CSS3",  level: 92 },
+    ],
+  },
+  {
+    title: "Backend & Databases",
+    Icon: FiServer,
+    accent: "#bf5af2",
+    skills: [
+      { name: "NestJS",          level: 88, Icon: SiNestjs,    iconColor: "#e0234e" },
+      { name: "Node.js/Express", level: 90 },
+      { name: "PostgreSQL",      level: 85, Icon: SiPostgresql, iconColor: "#336791" },
+      { name: "MySQL",           level: 80, Icon: SiMysql,     iconColor: "#f29111" },
+      { name: "MongoDB",         level: 87 },
+      { name: "Redis",           level: 82, Icon: SiRedis,     iconColor: "#ff4438" },
+    ],
+  },
+  {
+    title: "Cloud & DevOps",
+    Icon: FiCloud,
+    accent: "#ff375f",
+    skills: [
+      { name: "Docker",              level: 85, Icon: SiDocker,   iconColor: "#2496ed" },
+      { name: "AWS (EC2, S3, Lambda)", level: 80, Icon: FaAws,   iconColor: "#ff9900" },
+      { name: "RabbitMQ",            level: 75, Icon: SiRabbitmq, iconColor: "#ff6600" },
+      { name: "BullMQ",              level: 78, Icon: FiCpu,     iconColor: "#00e5ff" },
+      { name: "Git / GitHub",        level: 92 },
+      { name: "CI/CD (GH Actions)",  level: 75 },
+    ],
+  },
+];
 
-                    <div className="relative max-w-3xl mx-auto">
-                        {/* Timeline Line */}
-                        <div className="absolute left-1/2 w-1 h-full bg-gray-700 transform -translate-x-1/2" />
+// ─── SkillCategory ────────────────────────────────────────────────────────────
 
-                        {/* Timeline Items */}
-                        {[
-                            {
-                                title: "ISKCON Wavecity Official Website",
-                                role: "Full Stack Developer",
-                                tech: ["React.js", "MongoDB", "Tailwind", "Express.js", "Node.js"],
-                                icon: <FiBookOpen />
-                            },
-                            {
-                                title: "E-commerce Platform",
-                                role: "Frontend Developer",
-                                tech: ["React", "Node.js", "MongoDB"],
-                                icon: <FiBox />
-                            },
-                            {
-                                title: "LLM-powered Backend System",
-                                role: "Backend",
-                                tech: ["Node.js", "Express", "MongoDB", "OpenAI API"],
-                                icon: <FiZap />
-                            },
-                            {
-                                title: "NexMentor Platform",
-                                role: "Full Stack Lead",
-                                tech: ["Node.js", "Mongoose", "REST APIs", "Redux", "Render"],
-                                icon: <FiTool />
-                            },
-                        ].map((item, index) => (
-                            <div key={index} className={`mb-12 w-full ${index % 2 === 0 ? 'pr-8 lg:pr-24' : 'pl-8 lg:pl-24'}`}>
-                                <motion.div
-                                    whileHover={{ x: index % 2 === 0 ? 10 : -10 }}
-                                    className={`relative bg-gray-800 p-6 rounded-xl border border-gray-700 
-                            hover:border-blue-500 transition-all ${index % 2 === 0 ? 'text-right' : 'text-left'}`}
-                                >
-                                    <div className={`absolute top-6 ${index % 2 === 0 ? '-right-8' : '-left-8'}`}>
-                                        <div className="p-3 bg-blue-500 rounded-full text-white">
-                                            {item.icon}
-                                        </div>
-                                    </div>
-                                    <h3 className="text-xl font-semibold text-gray-100 mb-2">{item.title}</h3>
-                                    <p className="text-blue-400 mb-3">{item.role}</p>
-                                    <div className={`flex flex-wrap ${index % 2 === 0 ? 'justify-end' : 'justify-start'} gap-2`}>
-                                        {item.tech.map((tech, techIndex) => (
-                                            <span key={techIndex} className="px-3 py-1 bg-gray-700/50 rounded-full text-sm">
-                                                {tech}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            </div>
-                        ))}
-                    </div>
-                </motion.div>
+const SkillCategory = ({ title, Icon, accent, skills }: SkillCategoryProps) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    whileHover={{ y: -5 }}
+    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+    className="relative group rounded-2xl p-6 border border-white/[0.06] overflow-hidden transition-all duration-300 hover:border-white/[0.12]"
+    style={{ background: "rgba(255,255,255,0.025)" }}
+  >
+    {/* Hover glow */}
+    <div
+      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+      style={{ background: `radial-gradient(circle at 20% 20%, ${accent}10, transparent 65%)` }}
+    />
 
-                {/* Skills Matrix */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    className="mb-24"
-                >
-                    <h2 className="text-3xl font-bold text-gray-100 mb-12 text-center">
-                        Technical Arsenal
-                    </h2>
+    {/* Header */}
+    <div className="flex items-center gap-3 mb-6 relative z-10">
+      <div
+        className="w-9 h-9 rounded-xl flex items-center justify-center"
+        style={{ background: `${accent}16` }}
+      >
+        <Icon style={{ color: accent }} size={18} />
+      </div>
+      <h3
+        className="font-bold text-base text-white/80"
+        style={{ fontFamily: "'Syne', sans-serif" }}
+      >
+        {title}
+      </h3>
+    </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* Frontend Skills */}
-                        <SkillCategory
-                            title="Frontend Mastery"
-                            icon={<FiCode className="text-4xl" />}
-                            skills={[
-                                { name: "HTML5", level: 95 },
-                                { name: "CSS3", level: 90 },
-                                { name: "JavaScript", level: 85 },
-                                { name: "React.js", level: 88 },
-                                { name: "Next.js", level: 82 },
-                                { name: "TypeScript", level: 80 },
-                                { name: "Tailwind CSS", level: 92 },
-                                { name: "Material UI", level: 85 },
-                                { name: "Redux Toolkit", level: 83 },
-                            ]}
-                        />
-
-                        {/* Backend Skills */}
-                        <SkillCategory
-                            title="Backend Expertise"
-                            icon={<FiServer className="text-4xl" />}
-                            skills={[
-                                { name: "Node.js", level: 88 },
-                                { name: "Express.js", level: 85 },
-                                { name: "MongoDB", level: 87 },
-                                { name: "Mongoose", level: 84 },
-                                { name: "REST APIs", level: 89 },
-                                { name: "JWT Auth", level: 83 },
-                                { name: "WebSockets", level: 75 },
-                            ]}
-                        />
-
-                        {/* Tools & DevOps */}
-                        <SkillCategory
-                            title="Tools & Deployment"
-                            icon={<FiTool className="text-4xl" />}
-                            skills={[
-                                { name: "Git/GitHub", level: 90 },
-                                { name: "Vercel", level: 88 },
-                                { name: "Render", level: 82 },
-                                { name: "Postman", level: 85 },
-                            ]}
-                        />
-                    </div>
-                </motion.div>
-
-                {/* Philosophy Section */}
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-blue-400 mb-6">◆◆◆</div>
-                    <h3 className="text-2xl font-semibold text-gray-100 mb-6">
-                        Development Philosophy
-                    </h3>
-                    <p className="text-xl text-gray-300 leading-relaxed">
-                        &quot;I believe in building solutions that stand the test of scale while maintaining
-                        elegance in simplicity. Every line of code should serve a purpose, and every
-                        architecture decision should balance performance with maintainability.&quot;
-                    </p>
-                </div>
-            </div>
+    {/* Skills */}
+    <div className="space-y-4 relative z-10">
+      {skills.map((skill, i) => (
+        <div key={skill.name}>
+          <div className="flex justify-between items-center mb-1.5">
+            <span className="flex items-center gap-1.5 text-sm text-white/55">
+              {skill.Icon && (
+                <skill.Icon
+                  size={13}
+                  style={{ color: skill.iconColor ?? accent }}
+                />
+              )}
+              {skill.name}
+            </span>
+            <span
+              className="text-xs font-mono"
+              style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}
+            >
+              {skill.level}%
+            </span>
+          </div>
+          <div
+            className="h-[3px] rounded-full overflow-hidden"
+            style={{ background: "rgba(255,255,255,0.06)" }}
+          >
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: `${skill.level}%` }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+              className="h-full rounded-full"
+              style={{ background: `linear-gradient(90deg, ${accent}cc, ${accent}55)` }}
+            />
+          </div>
         </div>
-    );
-};
-
-const SkillCategory = ({ title, icon, skills }: SkillCategoryProps) => (
-    <motion.div
-        whileHover={{ y: -5 }}
-        className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700"
-    >
-        <div className="text-blue-500 mb-6 flex items-center gap-4">
-            {icon}
-            <h3 className="text-xl font-semibold">{title}</h3>
-        </div>
-        <div className="space-y-4">
-            {skills.map((skill, index) => (
-                <div key={index} className="relative group">
-                    <div className="flex justify-between mb-1">
-                        <span className="text-gray-300">{skill.name}</span>
-                        <span className="text-blue-400 text-sm">{skill.level}%</span>
-                    </div>
-                    <div className="h-2 bg-gray-700 rounded-full">
-                        <div
-                            className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-500"
-                            style={{ width: `${skill.level}%` }}
-                        />
-                    </div>
-                </div>
-            ))}
-        </div>
-    </motion.div>
+      ))}
+    </div>
+  </motion.div>
 );
+
+// ─── AboutPage ────────────────────────────────────────────────────────────────
+
+const AboutPage: React.FC = () => {
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap');
+
+        .grad-text-about {
+          background: linear-gradient(135deg, #00e5ff 0%, #bf5af2 50%, #ff375f 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+        }
+      `}</style>
+
+      <div
+        id="about"
+        className="min-h-screen text-white"
+        style={{ background: "#060810", fontFamily: "'DM Sans', sans-serif" }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-28">
+
+          {/* ── PROFILE HEADER ───────────────────────────────────────────────── */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="grid lg:grid-cols-3 gap-8 mb-28"
+          >
+            {/* Profile card */}
+            <div className="relative group col-span-1">
+              <div
+                className="absolute -inset-[1px] rounded-2xl opacity-50 group-hover:opacity-80 transition-opacity duration-500"
+                style={{
+                  background: "linear-gradient(135deg, #00e5ff22, #bf5af222, #ff375f22)",
+                  filter: "blur(6px)",
+                }}
+              />
+              <div
+                className="relative rounded-2xl p-7 border border-white/[0.07] h-full"
+                style={{ background: "#0d1117" }}
+              >
+                <h1
+                  className="grad-text-about text-3xl font-extrabold mb-2"
+                  style={{ fontFamily: "'Syne', sans-serif" }}
+                >
+                  Rishabh Rawat
+                </h1>
+                <p
+                  className="text-white/40 text-sm mb-7"
+                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                >
+                  Full Stack Developer · Backend Architect
+                </p>
+
+                <div className="space-y-3 text-sm">
+                  {[
+                    { Icon: FiZap,    color: "#00e5ff", text: "Currently Open to Work" },
+                    { Icon: FiCode,   color: "#bf5af2", text: "3+ Years Coding Experience" },
+                    { Icon: FiServer, color: "#ff375f", text: "2+ Years Professional Experience" },
+                  ].map(({ Icon, color, text }) => (
+                    <div key={text} className="flex items-center gap-3">
+                      <div
+                        className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+                        style={{ background: `${color}14` }}
+                      >
+                        <Icon size={13} style={{ color }} />
+                      </div>
+                      <span className="text-white/55">{text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Intro + focus */}
+            <div className="lg:col-span-2 flex flex-col gap-6">
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="text-lg text-white/60 leading-relaxed border-l-2 border-[#00e5ff]/40 pl-5"
+              >
+                I build robust, scalable systems that power modern applications. Specialising in
+                backend architectures with Node.js, MongoDB, NestJS, PostgreSQL, and cloud-native
+                solutions — I turn complex requirements into maintainable, high-performance code.
+              </motion.p>
+
+              {/* Current focus */}
+              <div
+                className="p-5 rounded-xl border border-[#00e5ff]/12"
+                style={{ background: "rgba(0,229,255,0.04)" }}
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <span
+                    className="w-2 h-2 rounded-full animate-pulse"
+                    style={{ background: "#00e5ff" }}
+                  />
+                  <h3
+                    className="text-sm font-medium"
+                    style={{
+                      color: "#00e5ff",
+                      fontFamily: "'JetBrains Mono', monospace",
+                    }}
+                  >
+                    // current_focus
+                  </h3>
+                </div>
+                <p className="text-white/50 text-sm leading-relaxed">
+                  Focused on system design and building scalable systems, while expanding expertise
+                  in AWS (Lambda, S3, EC2) and container orchestration with Docker and Kubernetes.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ── TIMELINE ─────────────────────────────────────────────────────── */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            className="mb-28"
+          >
+            <SectionLabel>Notable Contributions</SectionLabel>
+
+            <div className="relative max-w-3xl mx-auto">
+              {/* Centre line */}
+              <div
+                className="absolute left-1/2 -translate-x-1/2 w-[1px] h-full hidden md:block"
+                style={{ background: "linear-gradient(to bottom, transparent, #00e5ff22, #bf5af222, transparent)" }}
+              />
+
+              {TIMELINE.map(({ title, role, tech, Icon }, i) => {
+                const isLeft = i % 2 === 0;
+                const accent = ["#00e5ff", "#bf5af2", "#00e5ff", "#ff375f"][i];
+                return (
+                  <div
+                    key={title}
+                    className={`mb-10 w-full ${isLeft ? "md:pr-20 md:text-right" : "md:pl-20"}`}
+                  >
+                    <motion.div
+                      initial={{ opacity: 0, x: isLeft ? -20 : 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                      whileHover={{ y: -4 }}
+                      className="relative group rounded-2xl p-5 border border-white/[0.06] transition-all duration-300 hover:border-white/[0.12]"
+                      style={{ background: "rgba(255,255,255,0.025)" }}
+                    >
+                      {/* Hover glow */}
+                      <div
+                        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                        style={{ background: `radial-gradient(circle at 50% 0%, ${accent}0d, transparent 70%)` }}
+                      />
+
+                      {/* Centre dot (desktop) */}
+                      <div
+                        className="absolute top-5 hidden md:flex items-center justify-center w-8 h-8 rounded-full border border-white/10 z-10"
+                        style={{
+                          [isLeft ? "right" : "left"]: "-52px",
+                          background: `${accent}18`,
+                        }}
+                      >
+                        <Icon size={14} style={{ color: accent }} />
+                      </div>
+
+                      {/* Mobile icon */}
+                      <div className="md:hidden mb-3">
+                        <div
+                          className="inline-flex w-8 h-8 items-center justify-center rounded-xl"
+                          style={{ background: `${accent}16` }}
+                        >
+                          <Icon size={14} style={{ color: accent }} />
+                        </div>
+                      </div>
+
+                      <h3
+                        className="text-base font-bold text-white/85 mb-1"
+                        style={{ fontFamily: "'Syne', sans-serif" }}
+                      >
+                        {title}
+                      </h3>
+                      <p
+                        className="text-xs mb-3"
+                        style={{
+                          color: accent,
+                          fontFamily: "'JetBrains Mono', monospace",
+                        }}
+                      >
+                        {role}
+                      </p>
+                      <div className={`flex flex-wrap gap-1.5 ${isLeft ? "md:justify-end" : ""}`}>
+                        {tech.map((t) => (
+                          <span
+                            key={t}
+                            className="px-2.5 py-0.5 rounded-full text-xs text-white/40 border border-white/[0.06]"
+                            style={{ background: "rgba(255,255,255,0.04)" }}
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </motion.div>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+
+          {/* ── SKILLS ───────────────────────────────────────────────────────── */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="mb-28"
+          >
+            <SectionLabel>Technical Arsenal</SectionLabel>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {SKILL_CATEGORIES.map((cat) => (
+                <SkillCategory key={cat.title} {...cat} />
+              ))}
+            </div>
+          </motion.div>
+
+          {/* ── PHILOSOPHY ───────────────────────────────────────────────────── */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mx-auto text-center"
+          >
+            <div
+              className="flex items-center justify-center gap-2 mb-6"
+              style={{ fontFamily: "'JetBrains Mono', monospace" }}
+            >
+              <span className="text-[#00e5ff]/40 text-xs">◆</span>
+              <span className="text-[#bf5af2]/40 text-xs">◆</span>
+              <span className="text-[#ff375f]/40 text-xs">◆</span>
+            </div>
+            <h3
+              className="text-xl font-bold text-white/80 mb-5"
+              style={{ fontFamily: "'Syne', sans-serif" }}
+            >
+              Development Philosophy
+            </h3>
+            <p
+              className="text-white/40 leading-relaxed text-base border border-white/[0.06] rounded-2xl px-8 py-6"
+              style={{
+                background: "rgba(255,255,255,0.02)",
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: "13px",
+              }}
+            >
+              &ldquo;I believe in building systems that are not only functional but also resilient,
+              scalable, and a joy to maintain. Code should tell a story — clear, purposeful, and
+              built to last.&rdquo;
+            </p>
+          </motion.div>
+
+        </div>
+      </div>
+    </>
+  );
+};
+
+// ─── Section Label ────────────────────────────────────────────────────────────
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-4 mb-12">
+      <div className="flex-1 h-[1px]" style={{ background: "linear-gradient(to right, transparent, rgba(0,229,255,0.15))" }} />
+      <h2
+        className="text-2xl font-extrabold text-white/80 shrink-0"
+        style={{ fontFamily: "'Syne', sans-serif" }}
+      >
+        {children}
+      </h2>
+      <div className="flex-1 h-[1px]" style={{ background: "linear-gradient(to left, transparent, rgba(0,229,255,0.15))" }} />
+    </div>
+  );
+}
 
 export default AboutPage;

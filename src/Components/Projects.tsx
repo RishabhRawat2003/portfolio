@@ -1,21 +1,32 @@
 "use client";
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiGithub, FiExternalLink, FiUsers, FiBriefcase, FiUser, FiFolder } from 'react-icons/fi';
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  FiUsers, FiBriefcase, FiUser, FiFolder,
+  FiCpu, FiCloud, FiDatabase,
+} from "react-icons/fi";
+import {
+  SiNestjs, SiPostgresql, SiMysql,
+  SiDocker, SiRedis, SiRabbitmq,
+} from "react-icons/si";
+import { FaAws } from "react-icons/fa";
+import type { IconType } from "react-icons";
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface Project {
   title: string;
   description: string;
   tech: string[];
-  link: string;
   date: string;
   role: string;
   status?: string;
-  github?: string;
   client?: string;
   company?: string;
   team?: string;
   duration?: string;
+  featured?: boolean;
 }
 
 interface Projects {
@@ -26,382 +37,443 @@ interface Projects {
 
 type Tab = keyof Projects;
 
-const ProjectsSection = () => {
-  const [activeTab, setActiveTab] = useState<Tab>('personal');
+interface TabDef {
+  id: Tab;
+  Icon: IconType;
+  label: string;
+  accent: string;
+}
 
-  const projects: Projects = {
-    personal: [
-      // Add more personal projects
-    ],
-    collaborative: [
-      {
-        title: "ISKCON Official Website",
-        description: "Full-stack development for a global religious organization. Built an admin dashboard to manage dynamic content, integrated YouTube V2 API for automatic livestream/video updates, and implemented a secure payment gateway with a CSR donations system. Included CMS functionality for easy page and section management.",
-        tech: ["React.js", "Tailwind", "MongoDB", "Node.js"],
-        link: "https://www.iskconwavecity.com",
-        role: "Full Stack Developer",
-        date: "2025"
-      },
-      {
-        title: "LLM-powered Backend System",
-        description: "Architected a scalable backend integrating language models for intelligent automation. Implemented advanced email parsing to extract structured data, performed contextual analysis using LLMs, and generated intelligent reports based on extracted content.",
-        tech: ["Express.js", "Node.js", "MongoDB", "OpenAI", "S3"],
-        link: "#",
-        role: "Backend Developer",
-        date: "2025"
-      },
-      {
-        title: "Skywall – E-commerce Platform for Televisions",
-        description: "Engineered a complete e-commerce platform tailored for television products. Integrated a secure payment gateway, built support for bulk orders, and designed the backend to handle product inventory and customer data efficiently.",
-        tech: ["React.js", "Node.js", "TailwindCSS", "Express", "MongoDB", "S3"],
-        link: "https://skywall-frontend.vercel.app",
-        role: "Full Stack Developer",
-        date: "2025"
-      },
-      {
-        title: "Kisan Kumbh – AgriTech Event Platform",
-        description: "Built a full-stack platform for an agritech event featuring exhibitors and sponsors. Implemented slot booking with secure payment integration, and created admin tools to manage guests, stalls, and sponsorships.",
-        tech: ["React.js", "TailwindCSS", "Node.js", "MongoDB"],
-        link: "https://kisankumbh.in",
-        role: "Full Stack Developer",
-        date: "2025"
-      },
-      {
-        title: "TaxRishi – Tax Solutions Platform",
-        description: "Developed a feature-rich website offering a range of tax-related services and smart calculators built with complex business logic for accurate tax computation.",
-        tech: ["React.js", "TailwindCSS"],
-        link: "https://taxrishi.in",
-        role: "Frontend Developer",
-        date: "2024"
-      },
-      {
-        title: "Mentor Sudhir – Personal Portfolio",
-        description: "Crafted a visually appealing and responsive personal portfolio for a mentor. Implemented engaging animations and smooth transitions to enhance presentation and interactivity across all sections.",
-        tech: ["React", "TailwindCSS"],
-        link: "https://mentorsudhir.com",
-        role: "Frontend Developer",
-        date: "2025"
-      },
-      {
-        title: "KDSure – Real Estate Listings Website",
-        description: "Developed a sleek and interactive frontend for a real estate platform. Showcased property listings with smooth animations and an optimized layout to improve user engagement and experience.",
-        tech: ["React", "TailwindCSS"],
-        link: "https://kdsure.com",
-        role: "Frontend Developer",
-        date: "2024"
-      },
-      {
-        title: "Elevate Edge – Startup & Bootcamp Platform",
-        description: "Designed and developed the frontend for a platform offering masterclasses, bootcamps, and startup mentoring. Focused on clear structure, responsive design, and seamless user flow across event listings and mentor profiles.",
-        tech: ["React", "TailwindCSS", "Node.js", "Express"],
-        link: "https://elevate-edge-frontend.vercel.app",
-        role: "Frontend Developer",
-        date: "2025"
-      },
-      {
-        title: "Bharatronix – E-commerce Platform for Electronics",
-        description: "Backend development for an e-commerce platform focused on electronics. Designed scalable APIs, managed database schemas, and implemented core business logic for smooth product management and transactions.",
-        tech: ["React", "TailwindCSS", "Node.js", "Express.js", "MongoDB", "S3"],
-        link: "https://bharatronix.com/",
-        role: "Full Stack Developer",
-        date: "2025"
-      },
-      // {
-      //   title: "Suppkart – E-commerce Platform for Supplements",
-      //   description: "Full-stack development for a supplement-focused e-commerce platform. Built intuitive and responsive UI components using modern frontend frameworks, while also designing RESTful APIs and managing backend infrastructure for seamless product listings, cart operations, and order processing.",
-      //   tech: ["Nextjs", "TailwindCSS", "Node.js", "Express.js", "MongoDB", "S3"],
-      //   link: "https://suppkart-web-frontend.vercel.app/",
-      //   role: "Full Stack Developer",
-      //   date: "2025"
-      // }
-      // Add more collaborative projects
-    ],
-    freelancing: [
-      {
-        title: "NexMentor Platform",
-        description: "Led Full Stack development for NEET mentorship platform handling 10k+ users",
-        tech: ["React", "Node.js", "MongoDB"],
-        link: "https://www.nexmentor.com",
-        company: "EdTech Startup",
-        role: "Full Stack Lead",
-        team: "1 member",
-        date: "2025"
-      },
-      {
-        title: "MyCampus Safari",
-        description: "Developed campus tour platform with itinerary creation and mail notification system",
-        tech: ["React", "Node.js", "Express", "MongoDB"],
-        link: "https://mycampussafari.com/",
-        client: "Tour and Travel Company",
-        role: "Full Stack Developer",
-        team: "3 members",
-        date: "2025"
-      },
-    ]
-  };
+// ─── Static data ──────────────────────────────────────────────────────────────
 
-  return (
-    <section className="py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-4"
-          >
-            Project Portfolio
-          </motion.h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Showcase of technical solutions across different engagement models
-          </p>
+const TABS: TabDef[] = [
+  // { id: "personal",      Icon: FiUser,      label: "Personal",   accent: "#00e5ff" },
+  { id: "collaborative", Icon: FiUsers, label: "Team", accent: "#bf5af2" },
+  { id: "freelancing", Icon: FiBriefcase, label: "Freelance", accent: "#ff375f" },
+];
 
-          {/* Tabs Navigation */}
-          <motion.div
-            className="flex flex-wrap justify-center gap-2 mb-12 bg-gray-800 rounded-xl p-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            {[
-              { id: 'personal', icon: <FiUser />, label: 'Personal' },
-              { id: 'collaborative', icon: <FiUsers />, label: 'Team' },
-              { id: 'freelancing', icon: <FiBriefcase />, label: 'Freelance' },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as Tab)}
-                className={`flex items-center px-6 py-3 rounded-lg transition-all ${activeTab === tab.id
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                  : 'text-gray-300 hover:bg-gray-700/30'
-                  }`}
-              >
-                {tab.icon}
-                <span className="ml-2 font-medium">{tab.label}</span>
-              </button>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence mode='wait'>
-            {projects[activeTab].length > 0 ? (
-              projects[activeTab].map((project: Project, index: number) => (
-                <ProjectCard key={index} project={project} index={index} />
-              ))
-            ) : (
-              <motion.div
-                className="col-span-full"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-              >
-                <div className="relative flex flex-col bg-gradient-to-br from-gray-800/70 via-gray-800/50 to-gray-900/70 backdrop-blur-xl rounded-2xl border border-gray-700 overflow-hidden min-h-[400px]">
-                  {/* Geometric background pattern */}
-                  <div className="absolute inset-0 z-0 opacity-30">
-                    <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl"></div>
-                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        backgroundImage: `
-            radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 20%),
-            radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 20%),
-            linear-gradient(to bottom right, transparent 60%, rgba(31, 41, 55, 0.3) 100%)
-          `,
-                      }}
-                    ></div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="relative z-10 p-10 flex flex-col items-center justify-center h-full text-center">
-                    {/* Animated icon */}
-                    <motion.div
-                      className="mb-8"
-                      animate={{
-                        rotate: [0, 5, -5, 0],
-                        scale: [1, 1.05, 1]
-                      }}
-                      transition={{
-                        duration: 4,
-                        repeat: Infinity,
-                        repeatType: "reverse"
-                      }}
-                    >
-                      <div className="relative">
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 animate-pulse blur-lg"></div>
-                        <div className="p-5 bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-full relative">
-                          <svg className="w-16 h-16 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </motion.div>
-
-                    {/* Text content */}
-                    <div className="mb-8">
-                      <motion.h3
-                        className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-4"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                      >
-                        Projects in Progress
-                      </motion.h3>
-                      <motion.p
-                        className="text-lg text-gray-300 max-w-xl mx-auto"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.4 }}
-                      >
-                        I&apos;m currently crafting innovative solutions that showcase cutting-edge technologies and elegant design patterns. Stay tuned for exciting updates!
-                      </motion.p>
-                    </div>
-
-                    {/* Animated progress indicator */}
-                    <motion.div
-                      className="relative w-64 h-1.5 bg-gray-700 rounded-full overflow-hidden mb-10"
-                      initial={{ opacity: 0, width: 0 }}
-                      animate={{ opacity: 1, width: "100%" }}
-                      transition={{ delay: 0.6, duration: 0.8 }}
-                    >
-                      <motion.div
-                        className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
-                        initial={{ width: 0 }}
-                        animate={{ width: ["0%", "65%", "75%", "65%"] }}
-                        transition={{
-                          duration: 4,
-                          repeat: Infinity,
-                          repeatType: "reverse",
-                          ease: "easeInOut"
-                        }}
-                      />
-                    </motion.div>
-
-                    {/* Animated dots */}
-                    <motion.div
-                      className="flex space-x-3"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.8 }}
-                    >
-                      {[...Array(3)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          className="w-4 h-4 rounded-full bg-gradient-to-br from-blue-400 to-purple-500"
-                          animate={{
-                            scale: [1, 1.2, 1],
-                            y: [0, -8, 0],
-                          }}
-                          transition={{
-                            duration: 1.5,
-                            repeat: Infinity,
-                            delay: i * 0.2
-                          }}
-                        />
-                      ))}
-                    </motion.div>
-                  </div>
-
-                  {/* Corner accents */}
-                  <div className="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-blue-400/30 rounded-tl-2xl"></div>
-                  <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-purple-400/30 rounded-tr-2xl"></div>
-                  <div className="absolute bottom-0 left-0 w-16 h-16 border-b-2 border-l-2 border-blue-400/30 rounded-bl-2xl"></div>
-                  <div className="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-purple-400/30 rounded-br-2xl"></div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-    </section>
-  );
+const PROJECTS: Projects = {
+  personal: [],
+  collaborative: [
+    {
+      title: "ISKCON Wave City Website",
+      description:
+        "Full-stack platform for a global religious organisation. Features include an admin dashboard (React + Tailwind), automatic YouTube livestream updates via API, and a secure CSR donation system with payment gateway integration.",
+      tech: ["React", "Tailwind", "NodeJS", "MongoDB", "AWS EC2"],
+      role: "Full Stack Developer",
+      date: "2025",
+      featured: true,
+    },
+    {
+      title: "LLM-Powered Backend System",
+      description:
+        "Architected a scalable backend using NodeJS and MongoDB that integrates OpenAI APIs. The system parses emails, performs contextual analysis with LLMs, and generates intelligent reports. RabbitMQ orchestrates background tasks.",
+      tech: ["NodeJS", "MongoDB", "OpenAI", "RabbitMQ", "Redis", "AWS S3"],
+      role: "Backend Developer",
+      date: "2025",
+    },
+    {
+      title: "Skywall – E-commerce for Televisions",
+      description:
+        "End-to-end e-commerce platform with NestJS backend, PostgreSQL database, and Redis caching. Implemented secure payment gateways, bulk order support, and product inventory management.",
+      tech: ["React", "NestJS", "PostgreSQL", "Redis", "Tailwind", "AWS EC2"],
+      role: "Full Stack Developer",
+      date: "2025",
+    },
+    {
+      title: "Kisan Kumbh – AgriTech Event Platform",
+      description:
+        "Built a comprehensive platform for agritech events featuring exhibitors, sponsors, and slot booking with payment integration. Used NestJS and MySQL in the backend, and Tailwind for the frontend.",
+      tech: ["React", "NodeJS", "MySQL", "Tailwind"],
+      role: "Full Stack Developer",
+      date: "2025",
+    },
+    {
+      title: "TaxRishi – Tax Solutions Platform",
+      description:
+        "Feature-rich tax services website with complex business logic calculators. Built with React and Tailwind. Added all types of taxes, including GST, VAT, and Excise with Calculators. Used React Context API for state management.",
+      tech: ["React", "Tailwind"],
+      role: "Frontend Developer",
+      date: "2024",
+    },
+    {
+      title: "Mentor Sudhir – Personal Portfolio",
+      description:
+        "Crafted a visually engaging personal portfolio with smooth animations and responsive design. Utilized React and Tailwind for the frontend, and used React Context API for state management.",
+      tech: ["React", "Tailwind"],
+      role: "Frontend Developer",
+      date: "2025",
+    },
+    {
+      title: "KDSure – Real Estate Listings",
+      description:
+        "Developed a sleek frontend for property listings with animated maps and filtering. Optimized for mobile responsiveness. Built with React and Tailwind. Implemented React Context API for state management.",
+      tech: ["React", "Tailwind"],
+      role: "Full Stack Developer",
+      date: "2024",
+    },
+    {
+      title: "Elevate Edge – Startup & Bootcamp Platform",
+      description:
+        "Platform for masterclasses and bootcamps with user authentication, event booking, and mentor profiles. Used MongoDB, ExpressJS, NodeJS and React for the backend, and Tailwind for the frontend.",
+      tech: ["React", "NodeJS", "MongoDB", "Tailwind", "ExpressJS"],
+      role: "Full Stack Developer",
+      date: "2025",
+    },
+    {
+      title: "Bharatronix – Electronics E-commerce",
+      description:
+        "Backend development for an electronics e-commerce platform. Built scalable APIs with NodeJs, managed MongoDB schemas, and implemented business logic using BullMQ for order processing.",
+      tech: ["NodeJS", "MongoDb", "AWS S3", "Geolocation", "BullMQ"],
+      role: "Backend Developer",
+      date: "2025",
+    },
+  ],
+  freelancing: [
+    {
+      title: "Stay Unfiltered",
+      description:
+        "Built a scalable mental wellness platform serving individuals and organizations, enabling companies to offer employee wellness programs and users to access personalized therapy plans. Implemented secure payment integration, goal-based progress tracking between therapists and users, and an automated therapist matching system based on real-time availability. Developed a robust admin dashboard to manage users, therapists, and platform operations efficiently.",
+      tech: ["NextJS", "NodeJs", "MongoDB", "ExpressJS", "Tailwind", "Razorpay", "OAuth"],
+      role: "Frontend Developer",
+      team: "4 member",
+      date: "2025",
+    },
+    {
+      title: "NexMentor – NEET Mentorship Platform",
+    description:
+    "Architected and led full-stack development of a scalable EdTech platform serving 5k+ users. Delivered personalized dashboards for students, mentors, and admins, integrated secure payment gateway for seamless transactions, and built real-time chat using WebSockets. Implemented scheduled email notifications for reminders and notifications.",
+      tech: ["React", "NodeJs", "MongoDB", "ExpressJS", "Render", "OAuth", "Razorpay"],
+      role: "Full Stack Lead",
+      team: "2 member",
+      date: "2025",
+    },
+    {
+      title: "MyCampus Safari – Campus Tour Platform",
+      description:
+        "Built a platform for campus tours with itinerary creation, email notifications, and payment integration. Backend uses NodeJS, MongoDB, and Cloudinary for image uploads. Frontend uses React, Tailwind, and React Context API for state management.",
+      tech: ["React", "NodeJS", "MongoDB", "Tailwind", "Cloudinary"],
+      role: "Full Stack Developer",
+      team: "3 members",
+      date: "2025",
+    },
+  ],
 };
 
-const ProjectCard = ({ project, index }: { project: Project; index: number }) => (
+// ─── Tech icon helper ─────────────────────────────────────────────────────────
+
+interface TechIconInfo {
+  Icon: IconType;
+  color: string;
+}
+
+function getTechIconInfo(tech: string): TechIconInfo | null {
+  const t = tech.toLowerCase();
+  if (t.includes("nest")) return { Icon: SiNestjs, color: "#e0234e" };
+  if (t.includes("postgres")) return { Icon: SiPostgresql, color: "#336791" };
+  if (t.includes("mysql")) return { Icon: SiMysql, color: "#f29111" };
+  if (t.includes("docker")) return { Icon: SiDocker, color: "#2496ed" };
+  if (t.includes("redis")) return { Icon: SiRedis, color: "#ff4438" };
+  if (t.includes("rabbit")) return { Icon: SiRabbitmq, color: "#ff6600" };
+  if (t.includes("aws")) return { Icon: FaAws, color: "#ff9900" };
+  if (t.includes("lambda")) return { Icon: FiCloud, color: "#bf5af2" };
+  if (t.includes("s3")) return { Icon: FiDatabase, color: "#47a248" };
+  if (t.includes("bull")) return { Icon: FiCpu, color: "#00e5ff" };
+  return null;
+}
+
+// ─── ProjectCard ──────────────────────────────────────────────────────────────
+
+interface ProjectCardProps {
+  project: Project;
+  index: number;
+  accent: string;
+}
+
+const ProjectCard = ({ project, index, accent }: ProjectCardProps) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0 }}
-    transition={{ duration: 0.4, delay: index * 0.1 }}
-    className="group relative h-full flex flex-col bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 hover:border-blue-400/50 transition-all"
+    exit={{ opacity: 0, y: -8 }}
+    transition={{ duration: 0.4, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+    className="group relative flex flex-col rounded-2xl border border-white/[0.06] overflow-hidden transition-all duration-300 hover:border-white/[0.12]"
+    style={{ background: "rgba(255,255,255,0.025)" }}
   >
-    <div className="p-6 flex flex-col flex-1">
-      {/* Card Header */}
-      <div className="flex justify-between items-start mb-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-blue-500/10 rounded-lg text-blue-400">
-            <FiFolder className="text-2xl" />
-          </div>
-          <div className="flex flex-col">
-            <h3 className="text-xl font-semibold text-gray-100">{project.title}</h3>
-            <span className="text-sm text-blue-400">{project.date}</span>
-          </div>
+    {/* Hover glow */}
+    <div
+      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+      style={{ background: `radial-gradient(circle at 50% 0%, ${accent}0c, transparent 65%)` }}
+    />
+
+    {/* Featured badge */}
+    {project.featured && (
+      <div className="absolute top-4 right-4 z-10">
+        <span
+          className="px-2 py-0.5 rounded-full text-[10px] font-medium border"
+          style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            color: accent,
+            borderColor: `${accent}40`,
+            background: `${accent}12`,
+          }}
+        >
+          featured
+        </span>
+      </div>
+    )}
+
+    <div className="p-5 flex flex-col flex-1 relative z-10">
+      {/* Header */}
+      <div className="flex items-start gap-3 mb-4">
+        <div
+          className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
+          style={{ background: `${accent}14` }}
+        >
+          <FiFolder size={15} style={{ color: accent }} />
+        </div>
+        <div>
+          <h3
+            className="text-sm font-bold text-white/85 leading-snug group-hover:text-white transition-colors"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            {project.title}
+          </h3>
+          <span
+            className="text-[10px] mt-0.5 block"
+            style={{
+              color: `${accent}99`,
+              fontFamily: "'JetBrains Mono', monospace",
+            }}
+          >
+            {project.date}
+          </span>
         </div>
       </div>
 
       {/* Description */}
-      <p className="text-gray-300 mb-6 flex-1">{project.description}</p>
+      <p className="text-white/45 text-xs leading-relaxed mb-4 flex-1">
+        {project.description}
+      </p>
 
-      {/* Metadata */}
-      <div className="flex flex-wrap gap-3 mb-6">
-        {project.status && (
-          <span className="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">
-            {project.status}
-          </span>
-        )}
-        {project.team && (
-          <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm">
-            Team: {project.team}
-          </span>
-        )}
-        {project.duration && (
-          <span className="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm">
-            {project.duration}
-          </span>
-        )}
-      </div>
+      {/* Meta pills */}
+      {(project.status || project.team || project.duration) && (
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          {project.status && (
+            <span className="px-2 py-0.5 rounded-full text-[10px] border border-[#bf5af2]/20 text-[#bf5af2]/70"
+              style={{ background: "rgba(191,90,242,0.06)" }}>
+              {project.status}
+            </span>
+          )}
+          {project.team && (
+            <span className="px-2 py-0.5 rounded-full text-[10px] border border-[#00e5ff]/20 text-[#00e5ff]/60"
+              style={{ background: "rgba(0,229,255,0.06)" }}>
+              {project.team}
+            </span>
+          )}
+          {project.duration && (
+            <span className="px-2 py-0.5 rounded-full text-[10px] border border-white/10 text-white/35"
+              style={{ background: "rgba(255,255,255,0.04)" }}>
+              {project.duration}
+            </span>
+          )}
+        </div>
+      )}
 
-      {/* Tech Stack */}
-      <div className="flex flex-wrap gap-3 mb-6">
-        {project.tech.map((tech: string, index: number) => (
-          <div
-            key={index}
-            className="px-3 py-1.5 bg-gray-700/30 rounded-full text-sm text-gray-300 hover:bg-blue-500/20 hover:text-blue-400 transition-colors"
-          >
-            {tech}
-          </div>
-        ))}
+      {/* Tech stack */}
+      <div className="flex flex-wrap gap-1.5 mb-4">
+        {project.tech.map((tech) => {
+          const info = getTechIconInfo(tech);
+          return (
+            <div
+              key={tech}
+              className="flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] border border-white/[0.06] text-white/40 hover:text-white/70 hover:border-white/[0.12] transition-colors"
+              style={{ background: "rgba(255,255,255,0.03)" }}
+            >
+              {info && <info.Icon size={10} style={{ color: info.color }} />}
+              <span>{tech}</span>
+            </div>
+          );
+        })}
       </div>
 
       {/* Footer */}
-      <div className="border-t border-gray-700 pt-4 flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          {project.github && (
-            <a
-              href={project.github}
-              className="flex items-center text-sm text-gray-300 hover:text-blue-400 transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FiGithub className="mr-1.5" />
-              Source
-            </a>
-          )}
+      <div
+        className="flex justify-between items-center pt-3 border-t border-white/[0.05]"
+        style={{ fontFamily: "'JetBrains Mono', monospace" }}
+      >
+        <div className="flex items-center gap-2">
           {project.client && (
-            <span className="text-sm font-medium text-purple-400">{project.client}</span>
+            <span className="text-[10px] text-[#bf5af2]/60">{project.client}</span>
           )}
           {project.company && (
-            <span className="text-sm font-medium text-green-400">{project.company}</span>
+            <span className="text-[10px] text-[#00e5ff]/60">{project.company}</span>
           )}
         </div>
-        <span className="text-sm text-gray-400">{project.role}</span>
+        <span className="text-[10px] text-white/25">{project.role}</span>
       </div>
     </div>
-
-    {/* Hover Glow */}
-    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity -z-10 pointer-events-none" />
   </motion.div>
 );
+
+// ─── EmptyState ───────────────────────────────────────────────────────────────
+
+const EmptyState = () => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.5 }}
+    className="col-span-full"
+  >
+    <div
+      className="relative rounded-2xl border border-white/[0.06] p-16 text-center overflow-hidden"
+      style={{ background: "rgba(255,255,255,0.02)" }}
+    >
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "radial-gradient(circle at 50% 30%, rgba(0,229,255,0.05), transparent 60%)" }}
+      />
+      <div className="relative z-10">
+        <div
+          className="w-16 h-16 mx-auto mb-5 rounded-2xl flex items-center justify-center border border-white/[0.06]"
+          style={{ background: "rgba(0,229,255,0.06)" }}
+        >
+          <FiFolder size={28} style={{ color: "#00e5ff" }} />
+        </div>
+        <h3
+          className="text-lg font-bold text-white/70 mb-2"
+          style={{ fontFamily: "'Syne', sans-serif" }}
+        >
+          Projects in Progress
+        </h3>
+        <p className="text-white/35 text-sm max-w-md mx-auto leading-relaxed">
+          Currently building exciting new projects. Stay tuned for innovative solutions
+          leveraging modern backend and cloud technologies.
+        </p>
+      </div>
+    </div>
+  </motion.div>
+);
+
+// ─── ProjectsSection ──────────────────────────────────────────────────────────
+
+const ProjectsSection: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<Tab>("collaborative");
+
+  const activeTabDef = TABS.find((t) => t.id === activeTab)!;
+
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap');
+      `}</style>
+
+      <section
+        id="projects"
+        className="py-28 text-white"
+        style={{ background: "#060810", fontFamily: "'DM Sans', sans-serif" }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+
+          {/* Section heading */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-2xl mx-auto text-center mb-14"
+          >
+            <h2
+              className="text-4xl sm:text-5xl font-extrabold mb-3"
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                background: "linear-gradient(135deg, #00e5ff 0%, #bf5af2 50%, #ff375f 100%)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              Project Portfolio
+            </h2>
+            <p className="text-white/40 text-base">
+              Technical solutions across different engagement models
+            </p>
+          </motion.div>
+
+          {/* Tab navigation */}
+          <div className="flex justify-center mb-12">
+            <div
+              className="flex gap-1 p-1 rounded-2xl border border-white/[0.06]"
+              style={{ background: "rgba(255,255,255,0.03)" }}
+            >
+              {TABS.map(({ id, Icon, label, accent }) => {
+                const isActive = activeTab === id;
+                return (
+                  <button
+                    key={id}
+                    onClick={() => setActiveTab(id)}
+                    className="relative flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200"
+                    style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      color: isActive ? accent : "rgba(255,255,255,0.35)",
+                      background: isActive ? `${accent}10` : "transparent",
+                    }}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="tab-bg"
+                        className="absolute inset-0 rounded-xl border"
+                        style={{ borderColor: `${accent}30`, background: `${accent}0c` }}
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.45 }}
+                      />
+                    )}
+                    <Icon size={14} className="relative z-10" />
+                    <span className="relative z-10">{label}</span>
+                    <span
+                      className="relative z-10 text-[10px] px-1.5 py-0.5 rounded-full border"
+                      style={{
+                        borderColor: isActive ? `${accent}30` : "rgba(255,255,255,0.08)",
+                        color: isActive ? accent : "rgba(255,255,255,0.25)",
+                        background: isActive ? `${accent}10` : "transparent",
+                      }}
+                    >
+                      {PROJECTS[id].length}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Grid */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3 }}
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-5"
+            >
+              {PROJECTS[activeTab].length > 0 ? (
+                PROJECTS[activeTab].map((project, i) => (
+                  <ProjectCard
+                    key={project.title}
+                    project={project}
+                    index={i}
+                    accent={activeTabDef.accent}
+                  />
+                ))
+              ) : (
+                <EmptyState />
+              )}
+            </motion.div>
+          </AnimatePresence>
+
+        </div>
+      </section>
+    </>
+  );
+};
 
 export default ProjectsSection;

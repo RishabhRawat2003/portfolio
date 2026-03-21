@@ -1,12 +1,18 @@
 "use client";
+
 import axios from "axios";
 import { motion } from "framer-motion";
-import { useState, ChangeEvent, FormEvent } from "react";
-import { FiMail, FiLinkedin, FiGithub, FiFileText, FiBriefcase, FiUser, FiSend } from "react-icons/fi";
+import { useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
+import {
+  FiMail, FiLinkedin, FiGithub, FiFileText,
+  FiBriefcase, FiUser, FiSend,
+} from "react-icons/fi";
 import { toast } from "react-toastify";
-const backend = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-type SubjectOption = '' | 'hire' | 'freelance' | 'collab' | 'other';
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+type SubjectOption = "" | "hire" | "freelance" | "collab" | "other";
 
 interface FormData {
   name: string;
@@ -22,276 +28,448 @@ interface FormErrors {
   message?: string;
 }
 
-const ContactSection = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
+// ─── Constants ────────────────────────────────────────────────────────────────
 
-  const [errors, setErrors] = useState<FormErrors>({});
+const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+const SUBJECT_OPTIONS: { value: SubjectOption; label: string }[] = [
+  { value: "hire",      label: "Full-time Position" },
+  { value: "freelance", label: "Freelance Project" },
+  { value: "collab",    label: "Collaboration" },
+  { value: "other",     label: "Other Inquiry" },
+];
+
+const INITIAL_FORM: FormData = { name: "", email: "", subject: "", message: "" };
+
+// ─── InputField ──────────────────────────────────────────────────────────────
+
+interface InputFieldProps {
+  id: string;
+  label: string;
+  error?: string;
+  children: React.ReactNode;
+}
+
+const InputField = ({ id, label, error, children }: InputFieldProps) => (
+  <div>
+    <label
+      htmlFor={id}
+      className="block text-xs mb-2"
+      style={{
+        color: "rgba(255,255,255,0.4)",
+        fontFamily: "'JetBrains Mono', monospace",
+      }}
+    >
+      {label}
+    </label>
+    {children}
+    {error && (
+      <p
+        id={`${id}-error`}
+        className="text-[11px] mt-1.5"
+        style={{ color: "#ff375f", fontFamily: "'JetBrains Mono', monospace" }}
+      >
+        ✕ {error}
+      </p>
+    )}
+  </div>
+);
+
+// ─── ContactSection ───────────────────────────────────────────────────────────
+
+const ContactSection: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>(INITIAL_FORM);
+  const [errors, setErrors]     = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const validateForm = (): FormErrors => {
-    const newErrors: FormErrors = {};
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
-    if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) newErrors.email = 'Valid email required';
-    if (!formData.subject) newErrors.subject = 'Subject is required';
-    if (!formData.message.trim()) newErrors.message = 'Message is required';
-    return newErrors;
+  const validate = (): FormErrors => {
+    const e: FormErrors = {};
+    if (!formData.name.trim())                              e.name    = "Name is required";
+    if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) e.email = "Valid email required";
+    if (!formData.subject)                                  e.subject = "Subject is required";
+    if (!formData.message.trim())                           e.message = "Message is required";
+    return e;
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+    const errs = validate();
+    if (Object.keys(errs).length) { setErrors(errs); return; }
 
     setIsSubmitting(true);
     try {
-      // Add your submission logic here
-      const response = await axios.post(`${backend}/contact`, formData);
-      if (response.status === 200) {
+      const res = await axios.post(`${BACKEND}/contact`, formData);
+      if (res.status === 200) {
         toast.success("Message sent successfully");
+        setFormData(INITIAL_FORM);
+        setErrors({});
       }
-      // Reset form after submission
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setErrors({});
-    } catch (error) {
-      console.error("Contact form submission error:", error);
+    } catch (err) {
+      console.error("Contact form error:", err);
       toast.error("Something went wrong");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleInputChange = (
+  const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: name === 'subject' ? value as SubjectOption : value
+      [name]: name === "subject" ? (value as SubjectOption) : value,
     }));
-
     if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
+  // shared input class/style
+  const inputBase: React.CSSProperties = {
+    background: "rgba(255,255,255,0.03)",
+    border: "1px solid rgba(255,255,255,0.07)",
+    borderRadius: "10px",
+    color: "rgba(255,255,255,0.8)",
+    fontFamily: "'DM Sans', sans-serif",
+    fontSize: "14px",
+    width: "100%",
+    padding: "10px 14px",
+    outline: "none",
+    transition: "border-color 0.2s",
+  };
+
   return (
-    <section className="relative py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-4xl mx-auto text-center mb-16"
-        >
-          <h2 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-4">
-            Get In Touch
-          </h2>
-          <p className="text-xl text-gray-300">
-            Let&apos;s discuss how I can help bring your ideas to life
-          </p>
-        </motion.div>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap');
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Channels */}
+        .contact-input:focus { border-color: rgba(0,229,255,0.35) !important; }
+        .contact-input.err   { border-color: rgba(255,55,95,0.5)  !important; }
+        .contact-input::placeholder { color: rgba(255,255,255,0.2); }
+        .contact-select option { background: #0d1117; color: rgba(255,255,255,0.8); }
+      `}</style>
+
+      <section
+        id="contact"
+        className="py-28 text-white"
+        style={{ background: "#060810", fontFamily: "'DM Sans', sans-serif" }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+
+          {/* ── Heading ──────────────────────────────────────────────────────── */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-2xl mx-auto text-center mb-16"
           >
-            <div className="p-8 bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700">
-              <h3 className="text-2xl font-semibold text-gray-100 mb-6 flex items-center gap-3">
-                <FiBriefcase className="text-blue-400" />
-                Career Opportunities
-              </h3>
-              <p className="text-gray-300 mb-6">
-                Looking for a dedicated full-stack developer to join your team?
-              </p>
-              <a
-                href="mailto:rajputrishabh359@gmail.com"
-                className="inline-flex items-center px-6 py-3 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors"
-              >
-                <FiFileText className="mr-2" />
-                Schedule Discussion
-              </a>
-            </div>
+            <h2
+              className="text-4xl sm:text-5xl font-extrabold mb-3"
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                background: "linear-gradient(135deg, #00e5ff 0%, #bf5af2 50%, #ff375f 100%)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              Get In Touch
+            </h2>
+            <p className="text-white/40 text-base">
+              Let&apos;s discuss how I can help bring your ideas to life
+            </p>
+          </motion.div>
 
-            <div className="p-8 bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700">
-              <h3 className="text-2xl font-semibold text-gray-100 mb-6 flex items-center gap-3">
-                <FiUser className="text-purple-400" />
-                Project Collaboration
-              </h3>
-              <div className="flex flex-wrap gap-4">
+          {/* ── Grid ─────────────────────────────────────────────────────────── */}
+          <div className="grid lg:grid-cols-2 gap-8">
+
+            {/* ── Left — channels ──────────────────────────────────────────── */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col gap-5"
+            >
+              {/* Career */}
+              <ChannelCard accent="#00e5ff" Icon={FiBriefcase} title="Career Opportunities">
+                <p className="text-white/40 text-sm mb-5 leading-relaxed">
+                  Looking for a dedicated full-stack developer to join your team?
+                </p>
+                <a
+                  href="mailto:rajputrishabh359@gmail.com"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm border transition-colors duration-200 hover:border-[#00e5ff]/40 hover:text-[#00e5ff]"
+                  style={{
+                    borderColor: "rgba(0,229,255,0.2)",
+                    color: "#00e5ff",
+                    background: "rgba(0,229,255,0.06)",
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: "12px",
+                  }}
+                >
+                  <FiFileText size={13} />
+                  Schedule Discussion
+                </a>
+              </ChannelCard>
+
+              {/* Collaboration */}
+              <ChannelCard accent="#bf5af2" Icon={FiUser} title="Project Collaboration">
+                <p className="text-white/40 text-sm mb-5 leading-relaxed">
+                  Have an open-source idea or side project? Let&apos;s build together.
+                </p>
                 <a
                   href="https://github.com/RishabhRawat2003"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-6 py-3 bg-gray-700/30 text-gray-300 rounded-lg hover:bg-blue-500/20 hover:text-blue-400 transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm border transition-colors duration-200"
+                  style={{
+                    borderColor: "rgba(191,90,242,0.2)",
+                    color: "#bf5af2",
+                    background: "rgba(191,90,242,0.06)",
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: "12px",
+                  }}
                 >
-                  <FiGithub className="mr-2" />
+                  <FiGithub size={13} />
                   GitHub Profile
                 </a>
-              </div>
-            </div>
+              </ChannelCard>
 
-            <div className="p-8 bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700">
-              <h3 className="text-2xl font-semibold text-gray-100 mb-6">Direct Connect</h3>
-              <div className="flex justify-center gap-6">
-                <a
-                  href="https://www.linkedin.com/in/rishabh-rawat-371453228/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 bg-blue-500/10 text-blue-400 rounded-lg hover:bg-blue-500/20 transition-colors"
-                  aria-label="LinkedIn Profile"
-                >
-                  <FiLinkedin className="text-2xl" />
-                </a>
-                <a
-                  href="mailto:rajputrishabh359@gmail.com"
-                  className="p-3 bg-purple-500/10 text-purple-400 rounded-lg hover:bg-purple-500/20 transition-colors"
-                  aria-label="Send Email"
-                >
-                  <FiMail className="text-2xl" />
-                </a>
-              </div>
-            </div>
-          </motion.div>
+              {/* Direct connect */}
+              <ChannelCard accent="#ff375f" Icon={FiMail} title="Direct Connect">
+                <p className="text-white/40 text-sm mb-5 leading-relaxed">
+                  Prefer a direct line? Reach me on LinkedIn or via email.
+                </p>
+                <div className="flex gap-3">
+                  {[
+                    {
+                      href: "https://www.linkedin.com/in/rishabh-rawat-371453228/",
+                      Icon: FiLinkedin,
+                      label: "LinkedIn",
+                      accent: "#00e5ff",
+                    },
+                    {
+                      href: "mailto:rajputrishabh359@gmail.com",
+                      Icon: FiMail,
+                      label: "Email",
+                      accent: "#bf5af2",
+                    },
+                  ].map(({ href, Icon, label, accent }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target={href.startsWith("http") ? "_blank" : undefined}
+                      rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      aria-label={label}
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-xl border text-xs transition-colors duration-200"
+                      style={{
+                        borderColor: `${accent}20`,
+                        color: accent,
+                        background: `${accent}0a`,
+                        fontFamily: "'JetBrains Mono', monospace",
+                      }}
+                    >
+                      <Icon size={14} />
+                      {label}
+                    </a>
+                  ))}
+                </div>
+              </ChannelCard>
+            </motion.div>
 
-          {/* Contact Form */}
+            {/* ── Right — form ──────────────────────────────────────────────── */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="rounded-2xl border border-white/[0.06] p-6 sm:p-8"
+              style={{ background: "rgba(255,255,255,0.025)" }}
+            >
+              {/* Terminal header */}
+              <div className="flex items-center gap-2 mb-6 pb-4 border-b border-white/[0.05]">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+                <span
+                  className="ml-3 text-[11px] text-white/20"
+                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                >
+                  contact.form
+                </span>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+
+                {/* Name */}
+                <InputField id="name" label="// your_name" error={errors.name}>
+                  <input
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Rishabh Rawat"
+                    aria-invalid={!!errors.name}
+                    aria-describedby="name-error"
+                    className={`contact-input${errors.name ? " err" : ""}`}
+                    style={inputBase}
+                  />
+                </InputField>
+
+                {/* Email */}
+                <InputField id="email" label="// email_address" error={errors.email}>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="hello@example.com"
+                    aria-invalid={!!errors.email}
+                    aria-describedby="email-error"
+                    className={`contact-input${errors.email ? " err" : ""}`}
+                    style={inputBase}
+                  />
+                </InputField>
+
+                {/* Subject */}
+                <InputField id="subject" label="// subject" error={errors.subject}>
+                  <select
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    aria-invalid={!!errors.subject}
+                    aria-describedby="subject-error"
+                    className={`contact-input contact-select${errors.subject ? " err" : ""}`}
+                    style={{
+                      ...inputBase,
+                      color: formData.subject
+                        ? "rgba(255,255,255,0.8)"
+                        : "rgba(255,255,255,0.2)",
+                    }}
+                  >
+                    <option value="" disabled>Select a subject</option>
+                    {SUBJECT_OPTIONS.map(({ value, label }) => (
+                      <option key={value} value={value}>{label}</option>
+                    ))}
+                  </select>
+                </InputField>
+
+                {/* Message */}
+                <InputField id="message" label="// message" error={errors.message}>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Tell me about your project or opportunity..."
+                    rows={5}
+                    aria-invalid={!!errors.message}
+                    aria-describedby="message-error"
+                    className={`contact-input${errors.message ? " err" : ""}`}
+                    style={{ ...inputBase, resize: "none" }}
+                  />
+                </InputField>
+
+                {/* Submit */}
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.97 }}
+                  className="w-full py-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-opacity"
+                  style={{
+                    background: "linear-gradient(135deg, #00e5ff, #bf5af2)",
+                    color: "#060810",
+                    opacity: isSubmitting ? 0.6 : 1,
+                    fontFamily: "'JetBrains Mono', monospace",
+                  }}
+                >
+                  <FiSend size={14} />
+                  {isSubmitting ? "Sending..." : "Send Message →"}
+                </motion.button>
+
+              </form>
+            </motion.div>
+          </div>
+
+          {/* ── CTA footer ───────────────────────────────────────────────────── */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="p-8 bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mt-20"
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Form fields with proper TypeScript types */}
-              <div>
-                <label className="block text-gray-300 mb-2">Your Name</label>
-                <input
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="Enter your name"
-                  className={`w-full px-4 py-3 bg-gray-700/30 rounded-lg text-gray-100 focus:outline-none ${errors.name ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-blue-500'
-                    }`}
-                  aria-invalid={!!errors.name}
-                  aria-describedby="name-error"
-                />
-                {errors.name && (
-                  <p id="name-error" className="text-red-400 text-sm mt-1">
-                    {errors.name}
-                  </p>
-                )}
-              </div>
-
-              {/* Email input */}
-              <div>
-                <label className="block text-gray-300 mb-2">Email Address</label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Enter your email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-3 bg-gray-700/30 rounded-lg text-gray-100 focus:outline-none ${errors.email ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-blue-500'
-                    }`}
-                  aria-invalid={!!errors.email}
-                  aria-describedby="email-error"
-                />
-                {errors.email && (
-                  <p id="email-error" className="text-red-400 text-sm mt-1">
-                    {errors.email}
-                  </p>
-                )}
-              </div>
-
-              {/* Subject select */}
-              <div>
-                <label className="block text-gray-300 mb-2">Subject</label>
-                <select
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-3 bg-gray-700 rounded-lg text-gray-100 focus:outline-none ${errors.subject ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-blue-500'
-                    }`}
-                  aria-invalid={!!errors.subject}
-                  aria-describedby="subject-error"
-                >
-                  <option value="">Select a subject</option>
-                  <option value="hire">Full-time Position</option>
-                  <option value="freelance">Freelance Project</option>
-                  <option value="collab">Collaboration</option>
-                  <option value="other">Other Inquiry</option>
-                </select>
-                {errors.subject && (
-                  <p id="subject-error" className="text-red-400 text-sm mt-1">
-                    {errors.subject}
-                  </p>
-                )}
-              </div>
-
-              {/* Message textarea */}
-              <div>
-                <label className="block text-gray-300 mb-2">Message</label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  placeholder="Enter your message"
-                  onChange={handleInputChange}
-                  rows={5}
-                  style={{ resize: 'none' }}
-                  className={`w-full px-4 py-3 bg-gray-700/30 rounded-lg text-gray-100 focus:outline-none ${errors.message ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-blue-500'
-                    }`}
-                  aria-invalid={!!errors.message}
-                  aria-describedby="message-error"
-                />
-                {errors.message && (
-                  <p id="message-error" className="text-red-400 text-sm mt-1">
-                    {errors.message}
-                  </p>
-                )}
-              </div>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:shadow-xl hover:shadow-blue-500/20 transition-all flex items-center justify-center gap-2"
-              >
-                <FiSend className="text-lg" />
-                {isSubmitting ? 'Sending...' : 'Send Message'}
-              </motion.button>
-            </form>
+            <p className="text-white/30 text-sm mb-4">
+              Want to see my full qualifications?
+            </p>
+            <motion.a
+              href="/Rishabh_Rawat.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm border transition-colors duration-200"
+              style={{
+                borderColor: "rgba(0,229,255,0.2)",
+                color: "#00e5ff",
+                background: "rgba(0,229,255,0.06)",
+                fontFamily: "'JetBrains Mono', monospace",
+              }}
+            >
+              <FiFileText size={14} />
+              Download Resume
+            </motion.a>
           </motion.div>
-        </div>
 
-        {/* CTA Footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          className="text-center mt-24"
-        >
-          <div className="text-gray-300 mb-4">Want to see my full qualifications?</div>
-          <a
-            href="https://res.cloudinary.com/rishabh09/image/upload/f_auto,q_auto/Rishabh_Rawat_kskr0z"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center px-8 py-4 bg-blue-500/20 text-blue-400 rounded-xl hover:bg-blue-500/30 transition-colors"
-          >
-            <FiFileText className="mr-2" />
-            Download Resume
-          </a>
-        </motion.div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 };
+
+// ─── ChannelCard ──────────────────────────────────────────────────────────────
+
+interface ChannelCardProps {
+  accent: string;
+  Icon: React.ComponentType<{ size?: number; style?: React.CSSProperties }>;
+  title: string;
+  children: React.ReactNode;
+}
+
+const ChannelCard = ({ accent, Icon, title, children }: ChannelCardProps) => (
+  <motion.div
+    whileHover={{ y: -3 }}
+    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+    className="group relative rounded-2xl border border-white/[0.06] p-6 overflow-hidden transition-all duration-300 hover:border-white/[0.12]"
+    style={{ background: "rgba(255,255,255,0.025)" }}
+  >
+    {/* Hover glow */}
+    <div
+      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+      style={{ background: `radial-gradient(circle at 0% 50%, ${accent}0c, transparent 65%)` }}
+    />
+    <div className="relative z-10">
+      <div className="flex items-center gap-3 mb-4">
+        <div
+          className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+          style={{ background: `${accent}14` }}
+        >
+          <Icon size={15} style={{ color: accent }} />
+        </div>
+        <h3
+          className="text-sm font-bold text-white/75"
+          style={{ fontFamily: "'Syne', sans-serif" }}
+        >
+          {title}
+        </h3>
+      </div>
+      {children}
+    </div>
+  </motion.div>
+);
 
 export default ContactSection;
