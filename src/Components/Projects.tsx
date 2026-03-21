@@ -131,6 +131,15 @@ const PROJECTS: Projects = {
   ],
   freelancing: [
     {
+      title: "Neev Global Solution",
+      description:
+        "Developed a full-stack platform for Neev Global Solutions, a multi-domain business group focused on product marketing, property listings, startup promotions, commercial vehicle sales/rentals, and jaggery exports. Built scalable user and admin dashboards along with a robust lead management system, enabling admins to track, manage, and seamlessly assign leads to team members for efficient conversion.",
+      tech: ["NodeJs", "MongoDB", "ExpressJS", "Tailwind", "NextJS", "BullMQ", "Render"],
+      role: "FullStack Developer",
+      team: "2 member",
+      date: "2026",
+    },
+    {
       title: "Stay Unfiltered",
       description:
         "Built a scalable mental wellness platform serving individuals and organizations, enabling companies to offer employee wellness programs and users to access personalized therapy plans. Implemented secure payment integration, goal-based progress tracking between therapists and users, and an automated therapist matching system based on real-time availability. Developed a robust admin dashboard to manage users, therapists, and platform operations efficiently.",
@@ -141,8 +150,8 @@ const PROJECTS: Projects = {
     },
     {
       title: "NexMentor – NEET Mentorship Platform",
-    description:
-    "Architected and led full-stack development of a scalable EdTech platform serving 5k+ users. Delivered personalized dashboards for students, mentors, and admins, integrated secure payment gateway for seamless transactions, and built real-time chat using WebSockets. Implemented scheduled email notifications for reminders and notifications.",
+      description:
+        "Architected and led full-stack development of a scalable EdTech platform serving 5k+ users. Delivered personalized dashboards for students, mentors, and admins, integrated secure payment gateway for seamless transactions, and built real-time chat using WebSockets. Implemented scheduled email notifications for reminders and notifications.",
       tech: ["React", "NodeJs", "MongoDB", "ExpressJS", "Render", "OAuth", "Razorpay"],
       role: "Full Stack Lead",
       team: "2 member",
