@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FiUsers, FiBriefcase, FiUser, FiFolder,
-  FiCpu, FiCloud, FiDatabase,
+  FiCpu, FiCloud, FiDatabase, FiExternalLink, // added FiExternalLink
 } from "react-icons/fi";
 import {
   SiNestjs, SiPostgresql, SiMysql,
@@ -20,13 +20,14 @@ interface Project {
   description: string;
   tech: string[];
   date: string;
-  role: string;
+  role?: string;
   status?: string;
   client?: string;
   company?: string;
   team?: string;
   duration?: string;
   featured?: boolean;
+  url?: string; // new optional field
 }
 
 interface Projects {
@@ -47,14 +48,27 @@ interface TabDef {
 // ─── Static data ──────────────────────────────────────────────────────────────
 
 const TABS: TabDef[] = [
-  // { id: "personal",      Icon: FiUser,      label: "Personal",   accent: "#00e5ff" },
-  { id: "collaborative", Icon: FiUsers, label: "Team", accent: "#bf5af2" },
-  { id: "freelancing", Icon: FiBriefcase, label: "Freelance", accent: "#ff375f" },
+  { id: "personal",      Icon: FiUser,      label: "Personal",   accent: "#00e5ff" },
+  { id: "collaborative", Icon: FiUsers,     label: "Team",       accent: "#bf5af2" },
+  { id: "freelancing",   Icon: FiBriefcase, label: "Freelance",  accent: "#ff375f" },
 ];
 
 const PROJECTS: Projects = {
-  personal: [],
+  personal: [
+    {
+      title: "DbPulse",
+      description:
+        "A desktop app built with Electron that tracks every query hitting your database (MongoDB, PostgreSQL, MySQL). See which API triggers how many queries, execution time, method, duration, and the exact query log. DbPulse gives you full visibility: which API triggered which query, execution time, full query logs — all per API call. Desktop + agent architecture. Available for Windows, Linux, and Mac.",
+      tech: ["React", "Electron", "NodeJS", "Socket.io", "Mongoose", "PostgreSQL", "MySQL", "npm", "pip", "Maven"],
+      date: "2026",
+      featured: true,
+      status: "Cross‑platform (Win, Mac, Linux)",
+      url: "https://dbpulse-beta.vercel.app/", // added link
+      // role intentionally omitted
+    },
+  ],
   collaborative: [
+    // ... (all existing projects, unchanged)
     {
       title: "ISKCON Wave City Website",
       description:
@@ -130,6 +144,7 @@ const PROJECTS: Projects = {
     },
   ],
   freelancing: [
+    // ... (all existing projects, unchanged)
     {
       title: "Neev Global Solution",
       description:
@@ -305,7 +320,7 @@ const ProjectCard = ({ project, index, accent }: ProjectCardProps) => (
         })}
       </div>
 
-      {/* Footer */}
+      {/* Footer – show link if url exists, else role */}
       <div
         className="flex justify-between items-center pt-3 border-t border-white/[0.05]"
         style={{ fontFamily: "'JetBrains Mono', monospace" }}
@@ -318,7 +333,19 @@ const ProjectCard = ({ project, index, accent }: ProjectCardProps) => (
             <span className="text-[10px] text-[#00e5ff]/60">{project.company}</span>
           )}
         </div>
-        <span className="text-[10px] text-white/25">{project.role}</span>
+        {project.url ? (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 text-[10px] text-[#00e5ff]/70 hover:text-[#00e5ff] transition-colors"
+          >
+            <FiExternalLink size={10} />
+            Visit
+          </a>
+        ) : (
+          project.role && <span className="text-[10px] text-white/25">{project.role}</span>
+        )}
       </div>
     </div>
   </motion.div>
