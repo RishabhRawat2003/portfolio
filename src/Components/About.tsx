@@ -16,7 +16,6 @@ import type { IconType } from "react-icons";
 
 interface Skill {
   name: string;
-  level: number;
   Icon?: IconType;
   iconColor?: string;
 }
@@ -70,12 +69,12 @@ const SKILL_CATEGORIES: SkillCategoryProps[] = [
     Icon: FiCode,
     accent: "#00e5ff",
     skills: [
-      { name: "React.js",      level: 90 },
-      { name: "Next.js",       level: 85 },
-      { name: "TypeScript",    level: 85 },
-      { name: "Tailwind CSS",  level: 95 },
-      { name: "Redux Toolkit", level: 80 },
-      { name: "HTML5 / CSS3",  level: 92 },
+      { name: "React.js" },
+      { name: "Next.js" },
+      { name: "TypeScript" },
+      { name: "Tailwind CSS" },
+      { name: "Redux Toolkit" },
+      { name: "HTML5 / CSS3" },
     ],
   },
   {
@@ -83,12 +82,12 @@ const SKILL_CATEGORIES: SkillCategoryProps[] = [
     Icon: FiServer,
     accent: "#bf5af2",
     skills: [
-      { name: "NestJS",          level: 88, Icon: SiNestjs,    iconColor: "#e0234e" },
-      { name: "Node.js/Express", level: 90 },
-      { name: "PostgreSQL",      level: 85, Icon: SiPostgresql, iconColor: "#336791" },
-      { name: "MySQL",           level: 80, Icon: SiMysql,     iconColor: "#f29111" },
-      { name: "MongoDB",         level: 87 },
-      { name: "Redis",           level: 82, Icon: SiRedis,     iconColor: "#ff4438" },
+      { name: "NestJS", Icon: SiNestjs, iconColor: "#e0234e" },
+      { name: "Node.js/Express" },
+      { name: "PostgreSQL", Icon: SiPostgresql, iconColor: "#336791" },
+      { name: "MySQL", Icon: SiMysql, iconColor: "#f29111" },
+      { name: "MongoDB" },
+      { name: "Redis", Icon: SiRedis, iconColor: "#ff4438" },
     ],
   },
   {
@@ -96,12 +95,12 @@ const SKILL_CATEGORIES: SkillCategoryProps[] = [
     Icon: FiCloud,
     accent: "#ff375f",
     skills: [
-      { name: "Docker",              level: 85, Icon: SiDocker,   iconColor: "#2496ed" },
-      { name: "AWS (EC2, S3, Lambda)", level: 80, Icon: FaAws,   iconColor: "#ff9900" },
-      { name: "RabbitMQ",            level: 75, Icon: SiRabbitmq, iconColor: "#ff6600" },
-      { name: "BullMQ",              level: 78, Icon: FiCpu,     iconColor: "#00e5ff" },
-      { name: "Git / GitHub",        level: 92 },
-      { name: "CI/CD (GH Actions)",  level: 75 },
+      { name: "Docker", Icon: SiDocker, iconColor: "#2496ed" },
+      { name: "AWS (EC2, S3, Lambda)", Icon: FaAws, iconColor: "#ff9900" },
+      { name: "RabbitMQ", Icon: SiRabbitmq, iconColor: "#ff6600" },
+      { name: "BullMQ", Icon: FiCpu, iconColor: "#00e5ff" },
+      { name: "Git / GitHub" },
+      { name: "CI/CD (GH Actions)" },
     ],
   },
 ];
@@ -140,43 +139,43 @@ const SkillCategory = ({ title, Icon, accent, skills }: SkillCategoryProps) => (
       </h3>
     </div>
 
-    {/* Skills */}
-    <div className="space-y-4 relative z-10">
-      {skills.map((skill, i) => (
-        <div key={skill.name}>
-          <div className="flex justify-between items-center mb-1.5">
-            <span className="flex items-center gap-1.5 text-sm text-white/55">
-              {skill.Icon && (
-                <skill.Icon
-                  size={13}
-                  style={{ color: skill.iconColor ?? accent }}
-                />
-              )}
-              {skill.name}
-            </span>
-            <span
-              className="text-xs font-mono"
-              style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}
-            >
-              {skill.level}%
-            </span>
-          </div>
-          <div
-            className="h-[3px] rounded-full overflow-hidden"
-            style={{ background: "rgba(255,255,255,0.06)" }}
-          >
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: `${skill.level}%` }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-              className="h-full rounded-full"
-              style={{ background: `linear-gradient(90deg, ${accent}cc, ${accent}55)` }}
+    {/* Skills - Animated Badges */}
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: {
+            staggerChildren: 0.04,
+          },
+        },
+      }}
+      className="flex flex-wrap gap-2.5 relative z-10"
+    >
+      {skills.map((skill) => (
+        <motion.div
+          key={skill.name}
+          variants={{
+            hidden: { opacity: 0, scale: 0.9 },
+            visible: { opacity: 1, scale: 1 },
+          }}
+          className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-200"
+        >
+          {skill.Icon && (
+            <skill.Icon
+              size={14}
+              style={{ color: skill.iconColor ?? accent }}
             />
-          </div>
-        </div>
+          )}
+          <span className="text-sm text-white/80 font-medium">
+            {skill.name}
+          </span>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   </motion.div>
 );
 
@@ -390,7 +389,7 @@ const AboutPage: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* ── SKILLS ───────────────────────────────────────────────────────── */}
+          {/* ── SKILLS (Redesigned) ─────────────────────────────────────────── */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
