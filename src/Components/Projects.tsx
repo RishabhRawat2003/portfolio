@@ -66,6 +66,15 @@ const PROJECTS: Projects = {
       url: "https://dbpulse-beta.vercel.app/", // added link
       // role intentionally omitted
     },
+    {
+      title: "JobScrape",
+      description:
+        "Job aggregator that replaces jumping between LinkedIn, Indeed, Naukri, and Instahyre. A Chrome extension takes your preferences — job title keywords, skills, location, and experience range — scrapes matching listings from those portals, stores them in a database, and surfaces everything in one dashboard where you can filter, tag (Applied, Interview, Rejected, Bookmark), and track applications.",
+      tech: ["React", "Chrome Extension", "NodeJS", "MongoDB"],
+      date: "2026",
+      featured: true,
+      url: "https://www.jobscrape.in/",
+    },
   ],
   collaborative: [
     // ... (all existing projects, unchanged)
