@@ -38,7 +38,7 @@ interface TimelineItem {
 
 const TIMELINE: TimelineItem[] = [
   {
-    title: "LLM-powered Backend System",
+    title: "AI-Powered Insurance Claim System",
     role: "Backend Developer",
     tech: ["NodeJS", "MongoDB", "RabbitMQ", "Redis", "AWS S3"],
     Icon: FiZap,

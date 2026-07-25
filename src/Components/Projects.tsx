@@ -79,6 +79,16 @@ const PROJECTS: Projects = {
   collaborative: [
     // ... (all existing projects, unchanged)
     {
+      title: "SURYACON",
+      description:
+        "ERP system for one of the largest construction company in Mohali–Chandigarh. Built modules for HRMS, Item Master, Task Master, Purchase, Inventory, Planning, and Projects. Used MongoDB change streams with Socket.io for real-time UI updates, RabbitMQ for background job queues, and cron jobs for scheduled tasks.",
+      tech: ["NodeJS", "TypeScript", "MongoDB", "Socket.io", "RabbitMQ", "Cron"],
+      role: "Backend Developer",
+      date: "2026",
+      featured: true,
+      team: "15+ members",
+    },
+    {
       title: "ISKCON Wave City Website",
       description:
         "Full-stack platform for a global religious organisation. Features include an admin dashboard (React + Tailwind), automatic YouTube livestream updates via API, and a secure CSR donation system with payment gateway integration.",
@@ -88,9 +98,9 @@ const PROJECTS: Projects = {
       featured: true,
     },
     {
-      title: "LLM-Powered Backend System",
+      title: "AI-Powered Insurance Claim System",
       description:
-        "Architected a scalable backend using NodeJS and MongoDB that integrates OpenAI APIs. The system parses emails, performs contextual analysis with LLMs, and generates intelligent reports. RabbitMQ orchestrates background tasks.",
+        "Architected a scalable backend using NodeJS and MongoDB that integrates OpenAI APIs to automate insurance claim processing. The system parses claim documents and emails, performs contextual analysis with LLMs, and generates intelligent assessment reports. RabbitMQ orchestrates background claim workflows.",
       tech: ["NodeJS", "MongoDB", "OpenAI", "RabbitMQ", "Redis", "AWS S3"],
       role: "Backend Developer",
       date: "2025",
