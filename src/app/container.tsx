@@ -7,14 +7,14 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         <>
             {children}
             <ToastContainer
-                position="top-right"
+                position="bottom-right"
                 autoClose={2500}
-                hideProgressBar={false}
+                hideProgressBar
                 newestOnTop={false}
                 closeOnClick
                 pauseOnHover
                 draggable
-                theme="colored"
+                theme="dark"
             />
         </>
     );
