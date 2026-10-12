@@ -40,7 +40,7 @@ export const LandingPage: React.FC = () => {
             {...fadeUp(0.16)}
             className="mt-8 max-w-xl text-lg leading-relaxed text-muted"
           >
-            I&apos;m {PROFILE.name}, a full-stack developer with 2+ years shaping web
+            I&apos;m {PROFILE.name}, a full-stack developer with 2.5+ years shaping web
             ecosystems — from fast, accessible frontends to cloud-native backends with
             queues, caches and real-time systems.
           </motion.p>

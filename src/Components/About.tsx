@@ -6,8 +6,8 @@ import { Container, Reveal, SectionHeader, Serif } from "./ui";
 const FACTS = [
   { label: "Role", value: PROFILE.role },
   { label: "Status", value: "Open to work" },
-  { label: "Experience", value: "2+ years professional" },
-  { label: "Coding", value: "3+ years" },
+  { label: "Experience", value: "2.5+ years professional" },
+  { label: "Coding", value: "3.5+ years" },
 ];
 
 const AboutPage: React.FC = () => {

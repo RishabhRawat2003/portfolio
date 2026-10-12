@@ -10,8 +10,8 @@ export const PROFILE = {
 };
 
 export const STATS = [
-  { value: "2+", label: "Years in industry" },
-  { value: "3+", label: "Years writing code" },
+  { value: "2.5+", label: "Years in industry" },
+  { value: "3.5+", label: "Years writing code" },
   { value: "4+", label: "Freelance projects shipped" },
 ];
 
@@ -82,9 +82,20 @@ export const PROJECTS: Project[] = [
     date: "2026",
     featured: true,
     highlight: true,
-    metric: { value: "150+", label: "real users and growing" },
+    metric: { value: "200+", label: "real users and growing" },
     status: "Live in production",
     url: "https://www.jobscrape.in/",
+  },
+  {
+    title: "Patternsee",
+    category: "personal",
+    description:
+      "A visual way to grind DSA for coding interviews. Patternsee turns interview patterns into playable, step-by-step animations so you can actually see how two pointers, sliding windows, trees, graphs, and DP unfold. 86 patterns across three levels — Must-Have, Strong Mid, and Product Company — plus a code lab and a review queue to lock patterns in.",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
+    date: "2026",
+    featured: true,
+    status: "Live · 86 animated patterns",
+    url: "https://patternsee.vercel.app/",
   },
   {
     title: "DbPulse",
