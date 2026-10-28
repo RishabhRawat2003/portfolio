@@ -4,7 +4,7 @@ export const PROFILE = {
   name: "Rishabh Rawat",
   role: "Full Stack Developer · Backend Architect",
   email: "rajputrishabh359@gmail.com",
-  resume: "/Rishabh_Rawat.pdf",
+  resume: "/Rishabh_Rawat_Resume.pdf",
   github: "https://github.com/RishabhRawat2003",
   linkedin: "https://www.linkedin.com/in/rishabh-rawat-371453228/",
 };
